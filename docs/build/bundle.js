@@ -462,12 +462,147 @@ var app = (function () {
         return { set, update, subscribe };
     }
 
+    // Unique ID creation requires a high quality random # generator. In the browser we therefore
+    // require the crypto API and do not support built-in fallback to lower quality random number
+    // generators (like Math.random()).
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+    // find the complete implementation of crypto (msCrypto) on IE11.
+    var getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+    var rnds8 = new Uint8Array(16);
+    function rng() {
+      if (!getRandomValues) {
+        throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+      }
+
+      return getRandomValues(rnds8);
+    }
+
+    var REGEX = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+
+    function validate(uuid) {
+      return typeof uuid === 'string' && REGEX.test(uuid);
+    }
+
+    /**
+     * Convert array of 16 byte values to UUID string format of the form:
+     * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+     */
+
+    var byteToHex = [];
+
+    for (var i = 0; i < 256; ++i) {
+      byteToHex.push((i + 0x100).toString(16).substr(1));
+    }
+
+    function stringify(arr) {
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      // Note: Be careful editing this code!  It's been tuned for performance
+      // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+      var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+      // of the following:
+      // - One or more input array values don't map to a hex octet (leading to
+      // "undefined" in the uuid)
+      // - Invalid input values for the RFC `version` or `variant` fields
+
+      if (!validate(uuid)) {
+        throw TypeError('Stringified UUID is invalid');
+      }
+
+      return uuid;
+    }
+
+    function v4(options, buf, offset) {
+      options = options || {};
+      var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+      rnds[6] = rnds[6] & 0x0f | 0x40;
+      rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+      if (buf) {
+        offset = offset || 0;
+
+        for (var i = 0; i < 16; ++i) {
+          buf[offset + i] = rnds[i];
+        }
+
+        return buf;
+      }
+
+      return stringify(rnds);
+    }
+
+    const estimates = createEstimates();
+    let socket;
+    loadScript(
+      "https://simple-websocket-server.herokuapp.com/socket.io/socket.io.js",
+      () => {
+        socket = setupWebsocket(getSetupedRoomId());
+        socket.on("do event", (event) => {
+          const subscriber = eventSubscribers[event.type];
+          if (subscriber) {
+            subscriber(event);
+          }
+        });
+      }
+    );
+
+    const eventSubscribers = {
+      append: (event) => {
+        estimates._append(event.name, event.point);
+      },
+      remove: (event) => {
+        estimates._remove(event.name);
+      },
+      clear: (event) => {
+        estimates._clear();
+      },
+    };
+
+    function loadScript(src, callback) {
+      let head = document.getElementsByTagName("head")[0];
+      let script = document.createElement("script");
+      script.src = src;
+      head.appendChild(script);
+      let done = false;
+      script.onload = script.onreadystatechange = () => {
+        if (!done) {
+          done = true;
+          callback();
+          script.onload = script.onreadystatechange = null;
+          if (head && script.parentNode) {
+            head.removeChild(script);
+          }
+        }
+      };
+    }
+
+    function getSetupedRoomId() {
+      const search = window.location.search;
+      let roomId;
+      if (!search) {
+        const uuid = v4();
+        window.location.hash = uuid;
+        window.history.replaceState("", "", "?" + uuid);
+        roomId = uuid;
+      } else {
+        roomId = search.substring(1);
+      }
+      return roomId;
+    }
+
     function createEstimates() {
       const { subscribe, set, update } = writable([]);
 
       return {
         subscribe,
         append: (name, point) => {
+          socket.emit("do event", {
+            type: "append",
+            name: name,
+            point: point,
+          });
+        },
+        _append: (name, point) => {
           update((estimates) => {
             let newEstimates = new Array();
             let exist = false;
@@ -485,6 +620,13 @@ var app = (function () {
           });
         },
         remove: (name) => {
+          socket.emit("do event", {
+            type: "remove",
+            name: name,
+            point: point,
+          });
+        },
+        _remove: (name) => {
           update((estimates) => {
             let newEstimates = [];
             for (const estimate of estimates) {
@@ -496,11 +638,21 @@ var app = (function () {
           });
         },
         clear: () => {
+          socket.emit("do event", {
+            type: "clear",
+          });
+        },
+        _clear: () => {
           update((estimates) => []);
         },
       };
     }
-    const estimates = createEstimates();
+
+    function setupWebsocket(roomId) {
+      return window.io(
+        "https://simple-websocket-server.herokuapp.com/?roomId=" + roomId
+      );
+    }
 
     /* src/Card.svelte generated by Svelte v3.29.4 */
     const file = "src/Card.svelte";
