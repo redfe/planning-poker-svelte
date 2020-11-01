@@ -1,6 +1,6 @@
 <script>
   import Table from "./Table.svelte";
-  import SelectionCards from "./SelectionCards.svelte";
+  import SelectionCards from "./UserSelection.svelte";
   export let name;
 </script>
 
