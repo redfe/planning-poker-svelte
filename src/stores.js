@@ -31,7 +31,7 @@ function createEstimates() {
         }
         return newEstimates;
       });
-    }
+    },
   };
 }
 export const estimates = createEstimates();

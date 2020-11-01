@@ -493,7 +493,7 @@ var app = (function () {
             }
             return newEstimates;
           });
-        }
+        },
       };
     }
     const estimates = createEstimates();
@@ -515,7 +515,7 @@ var app = (function () {
     			attr_dev(div, "class", "card svelte-1h5x69a");
     			toggle_class(div, "closed", /*closed*/ ctx[2]);
     			toggle_class(div, "selected", /*selected*/ ctx[1]);
-    			add_location(div, file, 14, 0, 280);
+    			add_location(div, file, 31, 0, 610);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -660,7 +660,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (7:4) {#each $estimates as estimate}
+    // (61:4) {#each $estimates as estimate}
     function create_each_block(ctx) {
     	let div1;
     	let card;
@@ -687,10 +687,10 @@ var app = (function () {
     			div0 = element("div");
     			t1 = text(t1_value);
     			t2 = space();
-    			attr_dev(div0, "class", "name svelte-dae4sv");
-    			add_location(div0, file$1, 9, 8, 268);
-    			attr_dev(div1, "class", "estimate svelte-dae4sv");
-    			add_location(div1, file$1, 7, 6, 183);
+    			attr_dev(div0, "class", "name svelte-s88bq1");
+    			add_location(div0, file$1, 63, 8, 1387);
+    			attr_dev(div1, "class", "estimate svelte-s88bq1");
+    			add_location(div1, file$1, 61, 6, 1302);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -726,7 +726,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(7:4) {#each $estimates as estimate}",
+    		source: "(61:4) {#each $estimates as estimate}",
     		ctx
     	});
 
@@ -765,13 +765,13 @@ var app = (function () {
     			div2 = element("div");
     			div1 = element("div");
     			div1.textContent = "open";
-    			attr_dev(div0, "class", "estimates svelte-dae4sv");
-    			add_location(div0, file$1, 5, 2, 118);
-    			attr_dev(div1, "class", "open-button svelte-dae4sv");
-    			add_location(div1, file$1, 14, 4, 355);
-    			add_location(div2, file$1, 13, 2, 345);
-    			attr_dev(div3, "class", "table svelte-dae4sv");
-    			add_location(div3, file$1, 4, 0, 96);
+    			attr_dev(div0, "class", "estimates svelte-s88bq1");
+    			add_location(div0, file$1, 59, 2, 1237);
+    			attr_dev(div1, "class", "open-button svelte-s88bq1");
+    			add_location(div1, file$1, 68, 4, 1473);
+    			add_location(div2, file$1, 67, 2, 1463);
+    			attr_dev(div3, "class", "table svelte-s88bq1");
+    			add_location(div3, file$1, 58, 0, 1215);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -892,7 +892,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (20:2) {#each points as point}
+    // (34:2) {#each points as point}
     function create_each_block$1(ctx) {
     	let card;
     	let current;
@@ -938,7 +938,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(20:2) {#each points as point}",
+    		source: "(34:2) {#each points as point}",
     		ctx
     	});
 
@@ -974,9 +974,9 @@ var app = (function () {
     			}
 
     			attr_dev(div0, "class", "svelte-18nr3bt");
-    			add_location(div0, file$2, 18, 2, 481);
+    			add_location(div0, file$2, 32, 2, 772);
     			attr_dev(div1, "class", "svelte-18nr3bt");
-    			add_location(div1, file$2, 17, 0, 473);
+    			add_location(div1, file$2, 31, 0, 764);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1146,11 +1146,11 @@ var app = (function () {
     			br = element("br");
     			t4 = space();
     			create_component(selectioncards.$$.fragment);
-    			attr_dev(h1, "class", "svelte-vfyddu");
-    			add_location(h1, file$3, 10, 4, 205);
-    			add_location(br, file$3, 12, 4, 246);
-    			attr_dev(main, "class", "svelte-vfyddu");
-    			add_location(main, file$3, 9, 0, 194);
+    			attr_dev(h1, "class", "svelte-1wtnb6");
+    			add_location(h1, file$3, 38, 2, 665);
+    			add_location(br, file$3, 40, 2, 703);
+    			attr_dev(main, "class", "svelte-1wtnb6");
+    			add_location(main, file$3, 37, 0, 656);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1259,10 +1259,10 @@ var app = (function () {
     }
 
     const app = new App({
-    	target: document.body,
-    	props: {
-    		name: 'Planning Poker'
-    	}
+      target: document.body,
+      props: {
+        name: "Planning Poker",
+      },
     });
 
     return app;

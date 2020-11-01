@@ -1,18 +1,16 @@
 <script>
-  import {createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from "svelte";
   export let point;
   export let selected = false;
   export let closed = false;
   const dispatch = createEventDispatcher();
 
   function selectCard() {
-    dispatch('selectCard', {
-      point: point
+    dispatch("selectCard", {
+      point: point,
     });
   }
 </script>
-
-<div class="card" class:closed class:selected on:click={selectCard}>{closed ? "" : point}</div>
 
 <style>
   .card {
@@ -30,3 +28,7 @@
     background-color: #260fa0;
   }
 </style>
+
+<div class="card" class:closed class:selected on:click={selectCard}>
+  {closed ? '' : point}
+</div>

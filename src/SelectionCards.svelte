@@ -1,5 +1,5 @@
 <script>
-  import {estimates} from './stores.js';
+  import { estimates } from "./stores.js";
   import Card from "./Card.svelte";
   let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
   let selectedPoint;
@@ -15,13 +15,6 @@
   }
 </script>
 
-<div>
-  <div>{name}</div>
-  {#each points as point}
-    <Card point={point} selected={selectedPoint == point} on:selectCard={handleSelectCard}/>
-  {/each}
-</div>
-
 <style>
   div > :global(.card) {
     margin: 0 0 0.75rem 0.75rem;
@@ -35,3 +28,13 @@
     background-color: #e8bcbc;
   }
 </style>
+
+<div>
+  <div>{name}</div>
+  {#each points as point}
+    <Card
+      {point}
+      selected={selectedPoint == point}
+      on:selectCard={handleSelectCard} />
+  {/each}
+</div>
