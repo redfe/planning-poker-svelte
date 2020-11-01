@@ -1,6 +1,6 @@
 <script>
   import Table from "./Table.svelte";
-  import SelectionCards from "./UserSelection.svelte";
+  import UserSelection from "./UserSelection.svelte";
   export let name;
 </script>
 
@@ -38,5 +38,5 @@
 <main>
   <h1>Planning Poker</h1>
   <Table />
-  <SelectionCards />
+  <UserSelection />
 </main>

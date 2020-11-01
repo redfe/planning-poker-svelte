@@ -1212,11 +1212,11 @@ var app = (function () {
     	let t2;
     	let table;
     	let t3;
-    	let selectioncards;
+    	let userselection;
     	let current;
     	document.title = title_value = /*name*/ ctx[0];
     	table = new Table({ $$inline: true });
-    	selectioncards = new UserSelection({ $$inline: true });
+    	userselection = new UserSelection({ $$inline: true });
 
     	const block = {
     		c: function create() {
@@ -1227,11 +1227,11 @@ var app = (function () {
     			t2 = space();
     			create_component(table.$$.fragment);
     			t3 = space();
-    			create_component(selectioncards.$$.fragment);
+    			create_component(userselection.$$.fragment);
     			attr_dev(h1, "class", "svelte-1wtnb6");
-    			add_location(h1, file$3, 38, 2, 664);
+    			add_location(h1, file$3, 38, 2, 663);
     			attr_dev(main, "class", "svelte-1wtnb6");
-    			add_location(main, file$3, 37, 0, 655);
+    			add_location(main, file$3, 37, 0, 654);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1243,7 +1243,7 @@ var app = (function () {
     			append_dev(main, t2);
     			mount_component(table, main, null);
     			append_dev(main, t3);
-    			mount_component(selectioncards, main, null);
+    			mount_component(userselection, main, null);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -1254,19 +1254,19 @@ var app = (function () {
     		i: function intro(local) {
     			if (current) return;
     			transition_in(table.$$.fragment, local);
-    			transition_in(selectioncards.$$.fragment, local);
+    			transition_in(userselection.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(table.$$.fragment, local);
-    			transition_out(selectioncards.$$.fragment, local);
+    			transition_out(userselection.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(main);
     			destroy_component(table);
-    			destroy_component(selectioncards);
+    			destroy_component(userselection);
     		}
     	};
 
@@ -1295,7 +1295,7 @@ var app = (function () {
     		if ("name" in $$props) $$invalidate(0, name = $$props.name);
     	};
 
-    	$$self.$capture_state = () => ({ Table, SelectionCards: UserSelection, name });
+    	$$self.$capture_state = () => ({ Table, UserSelection, name });
 
     	$$self.$inject_state = $$props => {
     		if ("name" in $$props) $$invalidate(0, name = $$props.name);
