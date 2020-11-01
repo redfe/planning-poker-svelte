@@ -19,6 +19,7 @@
 
 <style>
   div > :global(.card) {
+    display: inline-block;
     margin: 0 0 0.75rem 0.75rem;
     padding: 1rem 0.5rem;
     width: 1.5rem;

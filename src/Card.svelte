@@ -14,7 +14,6 @@
 
 <style>
   .card {
-    display: inline-block;
     border-radius: 0.5rem;
     background-color: #f3ede2;
     box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.15);
