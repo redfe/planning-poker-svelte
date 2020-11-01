@@ -29,10 +29,16 @@
       max-width: 42rem;
     }
   }
+  :global(body) {
+    font-family: "M+PLUS+1p";
+  }
 </style>
 
 <svelte:head>
   <title>{name}</title>
+  <link
+    href="https://fonts.googleapis.com/css?family=M+PLUS+1p"
+    rel="stylesheet" />
 </svelte:head>
 
 <main>
