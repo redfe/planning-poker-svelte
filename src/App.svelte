@@ -38,6 +38,5 @@
 <main>
   <h1>Planning Poker</h1>
   <Table />
-  <br />
   <SelectionCards />
 </main>

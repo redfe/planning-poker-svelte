@@ -1212,8 +1212,6 @@ var app = (function () {
     	let t2;
     	let table;
     	let t3;
-    	let br;
-    	let t4;
     	let selectioncards;
     	let current;
     	document.title = title_value = /*name*/ ctx[0];
@@ -1229,12 +1227,9 @@ var app = (function () {
     			t2 = space();
     			create_component(table.$$.fragment);
     			t3 = space();
-    			br = element("br");
-    			t4 = space();
     			create_component(selectioncards.$$.fragment);
     			attr_dev(h1, "class", "svelte-1wtnb6");
     			add_location(h1, file$3, 38, 2, 664);
-    			add_location(br, file$3, 40, 2, 702);
     			attr_dev(main, "class", "svelte-1wtnb6");
     			add_location(main, file$3, 37, 0, 655);
     		},
@@ -1248,8 +1243,6 @@ var app = (function () {
     			append_dev(main, t2);
     			mount_component(table, main, null);
     			append_dev(main, t3);
-    			append_dev(main, br);
-    			append_dev(main, t4);
     			mount_component(selectioncards, main, null);
     			current = true;
     		},
