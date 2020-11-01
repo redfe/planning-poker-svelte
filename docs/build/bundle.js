@@ -475,6 +475,7 @@ var app = (function () {
               newEstimates.push(estimate);
               if (estimate.name === name) {
                 exist = true;
+                estimate.point = point;
               }
             }
             if (!exist) {
@@ -977,7 +978,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (34:2) {#each points as point}
+    // (41:2) {#each points as point}
     function create_each_block$1(ctx) {
     	let card;
     	let current;
@@ -1023,7 +1024,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(34:2) {#each points as point}",
+    		source: "(41:2) {#each points as point}",
     		ctx
     	});
 
@@ -1058,10 +1059,10 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			attr_dev(div0, "class", "svelte-18nr3bt");
-    			add_location(div0, file$2, 32, 2, 772);
-    			attr_dev(div1, "class", "svelte-18nr3bt");
-    			add_location(div1, file$2, 31, 0, 764);
+    			attr_dev(div0, "class", "user-name svelte-165jvai");
+    			add_location(div0, file$2, 39, 2, 877);
+    			attr_dev(div1, "class", "svelte-165jvai");
+    			add_location(div1, file$2, 38, 0, 869);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
