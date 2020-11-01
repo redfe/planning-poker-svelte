@@ -2,6 +2,8 @@ import { writable } from "svelte/store";
 import { v4 as uuidv4 } from "uuid";
 
 export const estimates = createEstimates();
+export const tableState = createTableState();
+
 let socket;
 loadScript(
   "https://simple-websocket-server.herokuapp.com/socket.io/socket.io.js",
@@ -25,6 +27,12 @@ const eventSubscribers = {
   },
   clear: (event) => {
     estimates._clear();
+  },
+  open: (event) => {
+    tableState._open();
+  },
+  close: (event) => {
+    tableState._close();
   },
 };
 
@@ -93,7 +101,6 @@ function createEstimates() {
       socket.emit("do event", {
         type: "remove",
         name: name,
-        point: point,
       });
     },
     _remove: (name) => {
@@ -114,6 +121,34 @@ function createEstimates() {
     },
     _clear: () => {
       update((estimates) => []);
+    },
+  };
+}
+
+function createTableState() {
+  const { subscribe, set, update } = writable({ closed: true });
+
+  return {
+    subscribe,
+    open: () => {
+      socket.emit("do event", {
+        type: "open",
+      });
+    },
+    _open: () => {
+      update(() => {
+        return { closed: false };
+      });
+    },
+    close: () => {
+      socket.emit("do event", {
+        type: "close",
+      });
+    },
+    _close: () => {
+      update(() => {
+        return { closed: true };
+      });
     },
   };
 }

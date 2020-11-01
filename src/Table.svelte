@@ -1,15 +1,14 @@
 <script>
-  import { estimates } from "./stores.js";
+  import { estimates, tableState } from "./stores.js";
   import Card from "./Card.svelte";
-  let closed = true;
   function handleOpenButtonClick(event) {
-    if (closed) {
+    if ($tableState.closed) {
       if ($estimates.length > 0) {
-        closed = false;
+        tableState.open();
       }
     } else {
       estimates.clear();
-      closed = true;
+      tableState.close();
     }
   }
 </script>
@@ -71,14 +70,14 @@
   <div class="estimates">
     {#each $estimates as estimate}
       <div class="estimate">
-        <Card point={estimate.point} {closed} />
+        <Card point={estimate.point} closed={$tableState.closed} />
         <div class="name">{estimate.name}</div>
       </div>
     {/each}
   </div>
   {#if $estimates.length > 0}
     <div class="open-button" on:click={handleOpenButtonClick}>
-      {closed ? 'open' : 'return'}
+      {$tableState.closed ? 'open' : 'return'}
     </div>
   {/if}
 </div>

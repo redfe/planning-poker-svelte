@@ -532,6 +532,8 @@ var app = (function () {
     }
 
     const estimates = createEstimates();
+    const tableState = createTableState();
+
     let socket;
     loadScript(
       "https://simple-websocket-server.herokuapp.com/socket.io/socket.io.js",
@@ -555,6 +557,12 @@ var app = (function () {
       },
       clear: (event) => {
         estimates._clear();
+      },
+      open: (event) => {
+        tableState._open();
+      },
+      close: (event) => {
+        tableState._close();
       },
     };
 
@@ -623,7 +631,6 @@ var app = (function () {
           socket.emit("do event", {
             type: "remove",
             name: name,
-            point: point,
           });
         },
         _remove: (name) => {
@@ -644,6 +651,34 @@ var app = (function () {
         },
         _clear: () => {
           update((estimates) => []);
+        },
+      };
+    }
+
+    function createTableState() {
+      const { subscribe, set, update } = writable({ closed: true });
+
+      return {
+        subscribe,
+        open: () => {
+          socket.emit("do event", {
+            type: "open",
+          });
+        },
+        _open: () => {
+          update(() => {
+            return { closed: false };
+          });
+        },
+        close: () => {
+          socket.emit("do event", {
+            type: "close",
+          });
+        },
+        _close: () => {
+          update(() => {
+            return { closed: true };
+          });
         },
       };
     }
@@ -816,7 +851,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (72:4) {#each $estimates as estimate}
+    // (71:4) {#each $estimates as estimate}
     function create_each_block(ctx) {
     	let div1;
     	let card;
@@ -830,7 +865,7 @@ var app = (function () {
     	card = new Card({
     			props: {
     				point: /*estimate*/ ctx[3].point,
-    				closed: /*closed*/ ctx[0]
+    				closed: /*$tableState*/ ctx[0].closed
     			},
     			$$inline: true
     		});
@@ -844,9 +879,9 @@ var app = (function () {
     			t1 = text(t1_value);
     			t2 = space();
     			attr_dev(div0, "class", "name svelte-s88bq1");
-    			add_location(div0, file$1, 74, 8, 1599);
+    			add_location(div0, file$1, 73, 8, 1629);
     			attr_dev(div1, "class", "estimate svelte-s88bq1");
-    			add_location(div1, file$1, 72, 6, 1519);
+    			add_location(div1, file$1, 71, 6, 1530);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -860,7 +895,7 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const card_changes = {};
     			if (dirty & /*$estimates*/ 2) card_changes.point = /*estimate*/ ctx[3].point;
-    			if (dirty & /*closed*/ 1) card_changes.closed = /*closed*/ ctx[0];
+    			if (dirty & /*$tableState*/ 1) card_changes.closed = /*$tableState*/ ctx[0].closed;
     			card.$set(card_changes);
     			if ((!current || dirty & /*$estimates*/ 2) && t1_value !== (t1_value = /*estimate*/ ctx[3].name + "")) set_data_dev(t1, t1_value);
     		},
@@ -883,17 +918,17 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(72:4) {#each $estimates as estimate}",
+    		source: "(71:4) {#each $estimates as estimate}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (79:2) {#if $estimates.length > 0}
+    // (78:2) {#if $estimates.length > 0}
     function create_if_block(ctx) {
     	let div;
-    	let t_value = (/*closed*/ ctx[0] ? "open" : "return") + "";
+    	let t_value = (/*$tableState*/ ctx[0].closed ? "open" : "return") + "";
     	let t;
     	let mounted;
     	let dispose;
@@ -903,7 +938,7 @@ var app = (function () {
     			div = element("div");
     			t = text(t_value);
     			attr_dev(div, "class", "open-button svelte-s88bq1");
-    			add_location(div, file$1, 79, 4, 1707);
+    			add_location(div, file$1, 78, 4, 1737);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -915,7 +950,7 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*closed*/ 1 && t_value !== (t_value = (/*closed*/ ctx[0] ? "open" : "return") + "")) set_data_dev(t, t_value);
+    			if (dirty & /*$tableState*/ 1 && t_value !== (t_value = (/*$tableState*/ ctx[0].closed ? "open" : "return") + "")) set_data_dev(t, t_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
@@ -928,7 +963,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(79:2) {#if $estimates.length > 0}",
+    		source: "(78:2) {#if $estimates.length > 0}",
     		ctx
     	});
 
@@ -966,9 +1001,9 @@ var app = (function () {
     			t = space();
     			if (if_block) if_block.c();
     			attr_dev(div0, "class", "estimates svelte-s88bq1");
-    			add_location(div0, file$1, 70, 2, 1454);
+    			add_location(div0, file$1, 69, 2, 1465);
     			attr_dev(div1, "class", "table svelte-s88bq1");
-    			add_location(div1, file$1, 69, 0, 1432);
+    			add_location(div1, file$1, 68, 0, 1443);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -986,7 +1021,7 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*$estimates, closed*/ 3) {
+    			if (dirty & /*$estimates, $tableState*/ 3) {
     				each_value = /*$estimates*/ ctx[1];
     				validate_each_argument(each_value);
     				let i;
@@ -1064,21 +1099,23 @@ var app = (function () {
     }
 
     function instance$1($$self, $$props, $$invalidate) {
+    	let $tableState;
     	let $estimates;
+    	validate_store(tableState, "tableState");
+    	component_subscribe($$self, tableState, $$value => $$invalidate(0, $tableState = $$value));
     	validate_store(estimates, "estimates");
     	component_subscribe($$self, estimates, $$value => $$invalidate(1, $estimates = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Table", slots, []);
-    	let closed = true;
 
     	function handleOpenButtonClick(event) {
-    		if (closed) {
+    		if ($tableState.closed) {
     			if ($estimates.length > 0) {
-    				$$invalidate(0, closed = false);
+    				tableState.open();
     			}
     		} else {
     			estimates.clear();
-    			$$invalidate(0, closed = true);
+    			tableState.close();
     		}
     	}
 
@@ -1090,21 +1127,14 @@ var app = (function () {
 
     	$$self.$capture_state = () => ({
     		estimates,
+    		tableState,
     		Card,
-    		closed,
     		handleOpenButtonClick,
+    		$tableState,
     		$estimates
     	});
 
-    	$$self.$inject_state = $$props => {
-    		if ("closed" in $$props) $$invalidate(0, closed = $$props.closed);
-    	};
-
-    	if ($$props && "$$inject" in $$props) {
-    		$$self.$inject_state($$props.$$inject);
-    	}
-
-    	return [closed, $estimates, handleOpenButtonClick];
+    	return [$tableState, $estimates, handleOpenButtonClick];
     }
 
     class Table extends SvelteComponentDev {
