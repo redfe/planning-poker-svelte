@@ -3,7 +3,8 @@
   import Card from "./Card.svelte";
   let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
   let selectedPoint;
-  let name = "hoge";
+  let name;
+  while (!(name = window.prompt("your name"))) {}
   function handleSelectCard(event) {
     if (selectedPoint === event.detail.point) {
       selectedPoint = null;

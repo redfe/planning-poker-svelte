@@ -978,7 +978,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (41:2) {#each points as point}
+    // (42:2) {#each points as point}
     function create_each_block$1(ctx) {
     	let card;
     	let current;
@@ -1024,7 +1024,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(41:2) {#each points as point}",
+    		source: "(42:2) {#each points as point}",
     		ctx
     	});
 
@@ -1034,9 +1034,10 @@ var app = (function () {
     function create_fragment$2(ctx) {
     	let div1;
     	let div0;
+    	let t0;
     	let t1;
     	let current;
-    	let each_value = /*points*/ ctx[1];
+    	let each_value = /*points*/ ctx[2];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -1052,7 +1053,7 @@ var app = (function () {
     		c: function create() {
     			div1 = element("div");
     			div0 = element("div");
-    			div0.textContent = `${/*name*/ ctx[2]}`;
+    			t0 = text(/*name*/ ctx[1]);
     			t1 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -1060,9 +1061,9 @@ var app = (function () {
     			}
 
     			attr_dev(div0, "class", "user-name svelte-165jvai");
-    			add_location(div0, file$2, 39, 2, 877);
+    			add_location(div0, file$2, 40, 2, 918);
     			attr_dev(div1, "class", "svelte-165jvai");
-    			add_location(div1, file$2, 38, 0, 869);
+    			add_location(div1, file$2, 39, 0, 910);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1070,6 +1071,7 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
     			append_dev(div1, div0);
+    			append_dev(div0, t0);
     			append_dev(div1, t1);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -1079,8 +1081,10 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*points, selectedPoint, handleSelectCard*/ 11) {
-    				each_value = /*points*/ ctx[1];
+    			if (!current || dirty & /*name*/ 2) set_data_dev(t0, /*name*/ ctx[1]);
+
+    			if (dirty & /*points, selectedPoint, handleSelectCard*/ 13) {
+    				each_value = /*points*/ ctx[2];
     				validate_each_argument(each_value);
     				let i;
 
@@ -1147,7 +1151,11 @@ var app = (function () {
     	validate_slots("UserSelection", slots, []);
     	let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
     	let selectedPoint;
-    	let name = "hoge";
+    	let name;
+
+    	while (!(name = window.prompt("your name"))) {
+    		
+    	}
 
     	function handleSelectCard(event) {
     		if (selectedPoint === event.detail.point) {
@@ -1175,16 +1183,16 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ("points" in $$props) $$invalidate(1, points = $$props.points);
+    		if ("points" in $$props) $$invalidate(2, points = $$props.points);
     		if ("selectedPoint" in $$props) $$invalidate(0, selectedPoint = $$props.selectedPoint);
-    		if ("name" in $$props) $$invalidate(2, name = $$props.name);
+    		if ("name" in $$props) $$invalidate(1, name = $$props.name);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [selectedPoint, points, name, handleSelectCard];
+    	return [selectedPoint, name, points, handleSelectCard];
     }
 
     class UserSelection extends SvelteComponentDev {
