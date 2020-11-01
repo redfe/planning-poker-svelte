@@ -30,7 +30,7 @@
     }
   }
   :global(body) {
-    font-family: "M+PLUS+1p";
+    font-family: "M PLUS 1p";
   }
 </style>
 
