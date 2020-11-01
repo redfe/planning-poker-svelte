@@ -13,6 +13,7 @@ function createEstimates() {
           newEstimates.push(estimate);
           if (estimate.name === name) {
             exist = true;
+            estimate.point = point;
           }
         }
         if (!exist) {
