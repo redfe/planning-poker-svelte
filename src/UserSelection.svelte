@@ -2,16 +2,17 @@
   import { estimates } from "./stores.js";
   import Card from "./Card.svelte";
   let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
-  let selectedPoint;
   let name;
   while (!(name = window.prompt("your name"))) {}
+  $: selectedPoint = $estimates
+    .filter((e) => e.name === name)
+    .map((e) => e.point)
+    .pop();
   function handleSelectCard(event) {
     if (selectedPoint === event.detail.point) {
-      selectedPoint = null;
       estimates.remove(name);
     } else {
-      selectedPoint = event.detail.point;
-      estimates.append(name, selectedPoint);
+      estimates.append(name, event.detail.point);
     }
   }
 </script>
@@ -42,7 +43,7 @@
   {#each points as point}
     <Card
       {point}
-      selected={selectedPoint == point}
+      selected={selectedPoint === point}
       on:selectCard={handleSelectCard} />
   {/each}
 </div>

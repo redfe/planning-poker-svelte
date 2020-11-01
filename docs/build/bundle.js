@@ -1156,19 +1156,19 @@ var app = (function () {
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[4] = list[i];
+    	child_ctx[5] = list[i];
     	return child_ctx;
     }
 
-    // (42:2) {#each points as point}
+    // (43:2) {#each points as point}
     function create_each_block$1(ctx) {
     	let card;
     	let current;
 
     	card = new Card({
     			props: {
-    				point: /*point*/ ctx[4],
-    				selected: /*selectedPoint*/ ctx[0] == /*point*/ ctx[4]
+    				point: /*point*/ ctx[5],
+    				selected: /*selectedPoint*/ ctx[1] === /*point*/ ctx[5]
     			},
     			$$inline: true
     		});
@@ -1185,7 +1185,7 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			const card_changes = {};
-    			if (dirty & /*selectedPoint*/ 1) card_changes.selected = /*selectedPoint*/ ctx[0] == /*point*/ ctx[4];
+    			if (dirty & /*selectedPoint*/ 2) card_changes.selected = /*selectedPoint*/ ctx[1] === /*point*/ ctx[5];
     			card.$set(card_changes);
     		},
     		i: function intro(local) {
@@ -1206,7 +1206,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(42:2) {#each points as point}",
+    		source: "(43:2) {#each points as point}",
     		ctx
     	});
 
@@ -1235,7 +1235,7 @@ var app = (function () {
     		c: function create() {
     			div1 = element("div");
     			div0 = element("div");
-    			t0 = text(/*name*/ ctx[1]);
+    			t0 = text(/*name*/ ctx[0]);
     			t1 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -1243,9 +1243,9 @@ var app = (function () {
     			}
 
     			attr_dev(div0, "class", "user-name svelte-165jvai");
-    			add_location(div0, file$2, 40, 2, 918);
+    			add_location(div0, file$2, 41, 2, 937);
     			attr_dev(div1, "class", "svelte-165jvai");
-    			add_location(div1, file$2, 39, 0, 910);
+    			add_location(div1, file$2, 40, 0, 929);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1263,9 +1263,9 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (!current || dirty & /*name*/ 2) set_data_dev(t0, /*name*/ ctx[1]);
+    			if (!current || dirty & /*name*/ 1) set_data_dev(t0, /*name*/ ctx[0]);
 
-    			if (dirty & /*points, selectedPoint, handleSelectCard*/ 13) {
+    			if (dirty & /*points, selectedPoint, handleSelectCard*/ 14) {
     				each_value = /*points*/ ctx[2];
     				validate_each_argument(each_value);
     				let i;
@@ -1329,10 +1329,12 @@ var app = (function () {
     }
 
     function instance$2($$self, $$props, $$invalidate) {
+    	let $estimates;
+    	validate_store(estimates, "estimates");
+    	component_subscribe($$self, estimates, $$value => $$invalidate(4, $estimates = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("UserSelection", slots, []);
     	let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
-    	let selectedPoint;
     	let name;
 
     	while (!(name = window.prompt("your name"))) {
@@ -1341,11 +1343,9 @@ var app = (function () {
 
     	function handleSelectCard(event) {
     		if (selectedPoint === event.detail.point) {
-    			$$invalidate(0, selectedPoint = null);
     			estimates.remove(name);
     		} else {
-    			$$invalidate(0, selectedPoint = event.detail.point);
-    			estimates.append(name, selectedPoint);
+    			estimates.append(name, event.detail.point);
     		}
     	}
 
@@ -1359,22 +1359,31 @@ var app = (function () {
     		estimates,
     		Card,
     		points,
-    		selectedPoint,
     		name,
-    		handleSelectCard
+    		handleSelectCard,
+    		selectedPoint,
+    		$estimates
     	});
 
     	$$self.$inject_state = $$props => {
     		if ("points" in $$props) $$invalidate(2, points = $$props.points);
-    		if ("selectedPoint" in $$props) $$invalidate(0, selectedPoint = $$props.selectedPoint);
-    		if ("name" in $$props) $$invalidate(1, name = $$props.name);
+    		if ("name" in $$props) $$invalidate(0, name = $$props.name);
+    		if ("selectedPoint" in $$props) $$invalidate(1, selectedPoint = $$props.selectedPoint);
     	};
+
+    	let selectedPoint;
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [selectedPoint, name, points, handleSelectCard];
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*$estimates, name*/ 17) {
+    			 $$invalidate(1, selectedPoint = $estimates.filter(e => e.name === name).map(e => e.point).pop());
+    		}
+    	};
+
+    	return [name, selectedPoint, points, handleSelectCard];
     }
 
     class UserSelection extends SvelteComponentDev {
