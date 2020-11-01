@@ -32,6 +32,9 @@ function createEstimates() {
         return newEstimates;
       });
     },
+    clear: () => {
+      update((estimates) => []);
+    },
   };
 }
 export const estimates = createEstimates();

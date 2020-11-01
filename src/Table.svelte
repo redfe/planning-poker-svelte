@@ -1,6 +1,17 @@
 <script>
   import { estimates } from "./stores.js";
   import Card from "./Card.svelte";
+  let closed = true;
+  function handleOpenButtonClick(event) {
+    if (closed) {
+      if ($estimates.length > 0) {
+        closed = false;
+      }
+    } else {
+      estimates.clear();
+      closed = true;
+    }
+  }
 </script>
 
 <style>
@@ -60,12 +71,14 @@
   <div class="estimates">
     {#each $estimates as estimate}
       <div class="estimate">
-        <Card closed={true} point={estimate.point} />
+        <Card point={estimate.point} {closed} />
         <div class="name">{estimate.name}</div>
       </div>
     {/each}
   </div>
-  <div>
-    <div class="open-button">open</div>
-  </div>
+  {#if $estimates.length > 0}
+    <div class="open-button" on:click={handleOpenButtonClick}>
+      {closed ? 'open' : 'return'}
+    </div>
+  {/if}
 </div>
