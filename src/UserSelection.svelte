@@ -27,10 +27,17 @@
   div > :global(.card):hover {
     background-color: #e8bcbc;
   }
+
+  .user-name {
+    text-align: cener;
+    color: #fff;
+    padding: 0.75rem 0;
+    font-size: 2rem;
+  }
 </style>
 
 <div>
-  <div>{name}</div>
+  <div class="user-name">{name}</div>
   {#each points as point}
     <Card
       {point}
