@@ -3,20 +3,22 @@ import { v4 as uuidv4 } from "uuid";
 
 export const estimates = createEstimates();
 export const tableState = createTableState();
-
+export const setup = new Promise((resolve) => {
+  loadScript(
+    "https://simple-websocket-server.herokuapp.com/socket.io/socket.io.js",
+    () => {
+      socket = setupWebsocket(getSetupedRoomId());
+      socket.on("do event", (event) => {
+        const subscriber = eventSubscribers[event.type];
+        if (subscriber) {
+          subscriber(event);
+        }
+      });
+      resolve();
+    }
+  );
+});
 let socket;
-loadScript(
-  "https://simple-websocket-server.herokuapp.com/socket.io/socket.io.js",
-  () => {
-    socket = setupWebsocket(getSetupedRoomId());
-    socket.on("do event", (event) => {
-      const subscriber = eventSubscribers[event.type];
-      if (subscriber) {
-        subscriber(event);
-      }
-    });
-  }
-);
 
 const eventSubscribers = {
   append: (event) => {

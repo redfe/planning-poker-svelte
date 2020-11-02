@@ -1,6 +1,7 @@
 <script>
   import Table from "./Table.svelte";
   import UserSelection from "./UserSelection.svelte";
+  import { setup } from "./stores.js";
   export let name;
 </script>
 
@@ -42,7 +43,11 @@
 </svelte:head>
 
 <main>
-  <h1>Planning Poker</h1>
-  <Table />
-  <UserSelection />
+  {#await setup}
+    <p>...waiting</p>
+  {:then}
+    <h1>Planning Poker</h1>
+    <Table />
+    <UserSelection />
+  {/await}
 </main>
