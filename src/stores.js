@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
 import { v4 as uuidv4 } from "uuid";
 
 export const estimates = createEstimates();
@@ -83,21 +83,22 @@ function createEstimates() {
       });
     },
     _append: (name, point) => {
-      update((estimates) => {
-        let newEstimates = new Array();
-        let exist = false;
-        for (const estimate of estimates) {
-          newEstimates.push(estimate);
-          if (estimate.name === name) {
-            exist = true;
-            estimate.point = point;
-          }
-        }
-        if (!exist) {
-          newEstimates.push({ name: name, point: point });
-        }
-        return newEstimates;
-      });
+      const updateFunction = () => {
+        update((estimates) => {
+          let filtered = estimates.filter((e) => e.name !== name);
+          return [...filtered, { name: name, point: point }];
+        });
+      };
+      if (
+        get(estimates)
+          .filter((e) => e.name === name)
+          .pop()
+      ) {
+        estimates._remove(name);
+        setTimeout(updateFunction, 500);
+      } else {
+        updateFunction();
+      }
     },
     remove: (name) => {
       socket.emit("do event", {

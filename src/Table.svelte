@@ -1,4 +1,5 @@
 <script>
+  import { fly } from "svelte/transition";
   import { estimates, tableState } from "./stores.js";
   import Card from "./Card.svelte";
   function handleOpenButtonClick(event) {
@@ -114,8 +115,8 @@
 
 <div class="table">
   <div class="estimates">
-    {#each $estimates as estimate}
-      <div class="estimate">
+    {#each $estimates as estimate (estimate.name)}
+      <div class="estimate" transition:fly={{ y: 100 }}>
         <Card point={estimate.point} closed={$tableState.closed} />
         <div class="name">{estimate.name}</div>
       </div>
