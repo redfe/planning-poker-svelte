@@ -47,6 +47,7 @@
     <p>...waiting</p>
   {:then}
     <h1>Planning Poker</h1>
+    <p>share the URL of this page with your team members.</p>
     <Table />
     <UserSelection />
   {/await}
