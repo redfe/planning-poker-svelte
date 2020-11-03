@@ -83,22 +83,23 @@ function createEstimates() {
       });
     },
     _append: (name, point) => {
-      const updateFunction = () => {
-        update((estimates) => {
-          let filtered = estimates.filter((e) => e.name !== name);
-          return [...filtered, { name: name, point: point }];
+      let delay = 0;
+      get(estimates)
+        .filter((e) => e.name === name)
+        .forEach((e) => {
+          estimates._remove(name);
+          delay = 500;
         });
-      };
-      if (
-        get(estimates)
-          .filter((e) => e.name === name)
-          .pop()
-      ) {
-        estimates._remove(name);
-        setTimeout(updateFunction, 500);
-      } else {
-        updateFunction();
-      }
+      setTimeout(
+        () =>
+          update((estimates) => {
+            return [
+              ...estimates.filter((e) => e.name !== name),
+              { name: name, point: point },
+            ];
+          }),
+        delay
+      );
     },
     remove: (name) => {
       socket.emit("do event", {
@@ -108,13 +109,7 @@ function createEstimates() {
     },
     _remove: (name) => {
       update((estimates) => {
-        let newEstimates = [];
-        for (const estimate of estimates) {
-          if (estimate.name !== name) {
-            newEstimates.push(estimate);
-          }
-        }
-        return newEstimates;
+        return [...estimates.filter((e) => e.name !== name)];
       });
     },
     clear: () => {
