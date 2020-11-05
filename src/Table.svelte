@@ -122,7 +122,7 @@
       </div>
     {/each}
   </div>
-  {#if $estimates.length > 0}
+  {#if $estimates.length > 0 || !$tableState.closed}
     <div class="open-button" on:click={handleOpenButtonClick}>
       {$tableState.closed ? 'open' : 'return'}
     </div>
