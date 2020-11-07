@@ -9,15 +9,17 @@
     .map((e) => e.point)
     .pop();
   function handleSelectCard(event) {
-    let delay = 0;
+    const appendCallback = () => estimates.append(name, event.detail.point);
     if (selectedPoint) {
-      estimates.remove(name);
-      if (selectedPoint === event.detail.point) {
-        return;
-      }
-      delay = 500;
+      estimates.remove(
+        name,
+        selectedPoint === event.detail.point
+          ? null
+          : () => setTimeout(appendCallback, 300)
+      );
+    } else {
+      appendCallback();
     }
-    setTimeout(() => estimates.append(name, event.detail.point), delay);
   }
 </script>
 

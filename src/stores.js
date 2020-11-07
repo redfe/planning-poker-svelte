@@ -70,9 +70,12 @@ function getSetupedRoomId() {
   return roomId;
 }
 
+let removeCallback = null;
+
 function createEstimates() {
   const { subscribe, set, update } = writable([]);
 
+  const sort = (a, b) => a.appendedAt - b.appendedAt;
   return {
     subscribe,
     append: (name, point) => {
@@ -86,11 +89,12 @@ function createEstimates() {
       update((estimates) => {
         return [
           ...estimates.filter((e) => e.name !== name),
-          { name: name, point: point },
-        ];
+          { name: name, point: point, appendedAt: new Date() },
+        ].sort(sort);
       });
     },
-    remove: (name) => {
+    remove: (name, callback = null) => {
+      removeCallback = callback;
       socket.emit("do event", {
         type: "remove",
         name: name,
@@ -98,8 +102,12 @@ function createEstimates() {
     },
     _remove: (name) => {
       update((estimates) => {
-        return [...estimates.filter((e) => e.name !== name)];
+        return [...estimates.filter((e) => e.name !== name)].sort(sort);
       });
+      if (removeCallback) {
+        removeCallback();
+        removeCallback = null;
+      }
     },
     clear: () => {
       socket.emit("do event", {
