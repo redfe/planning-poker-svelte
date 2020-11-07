@@ -83,23 +83,12 @@ function createEstimates() {
       });
     },
     _append: (name, point) => {
-      let delay = 0;
-      get(estimates)
-        .filter((e) => e.name === name)
-        .forEach((e) => {
-          estimates._remove(name);
-          delay = 500;
-        });
-      setTimeout(
-        () =>
-          update((estimates) => {
-            return [
-              ...estimates.filter((e) => e.name !== name),
-              { name: name, point: point },
-            ];
-          }),
-        delay
-      );
+      update((estimates) => {
+        return [
+          ...estimates.filter((e) => e.name !== name),
+          { name: name, point: point },
+        ];
+      });
     },
     remove: (name) => {
       socket.emit("do event", {

@@ -9,11 +9,15 @@
     .map((e) => e.point)
     .pop();
   function handleSelectCard(event) {
-    if (selectedPoint === event.detail.point) {
+    let delay = 0;
+    if (selectedPoint) {
       estimates.remove(name);
-    } else {
-      estimates.append(name, event.detail.point);
+      if (selectedPoint === event.detail.point) {
+        return;
+      }
+      delay = 500;
     }
+    setTimeout(() => estimates.append(name, event.detail.point), delay);
   }
 </script>
 
