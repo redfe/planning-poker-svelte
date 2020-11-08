@@ -1,60 +1,33 @@
 import { writable, get } from "svelte/store";
 import { v4 as uuidv4 } from "uuid";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
+const firebaseConfig = {
+  projectId: "sample-project-294713",
+};
+
+firebase.initializeApp(firebaseConfig);
+const roomId = getSetupedRoomId();
+const db = firebase.firestore();
+const roomRef = db.collection("rooms").doc(roomId);
 
 export const estimates = createEstimates();
 export const tableState = createTableState();
 export const setup = new Promise((resolve) => {
-  loadScript(
-    "https://simple-websocket-server.herokuapp.com/socket.io/socket.io.js",
-    () => {
-      socket = setupWebsocket(getSetupedRoomId());
-      socket.on("do event", (event) => {
-        const subscriber = eventSubscribers[event.type];
-        if (subscriber) {
-          subscriber(event);
-        }
-      });
-      resolve();
+  roomRef.onSnapshot((documentSnapshot) => {
+    if (documentSnapshot && documentSnapshot.exists) {
+      const room = documentSnapshot.data();
+      const comparator = (a, b) => a.appendedAt.seconds - b.appendedAt.seconds;
+      estimates.set(room.estimates.sort(comparator));
+      tableState.set(room.tableState);
+    } else {
+      estimates.set([]);
+      tableState.set({ closed: true });
     }
-  );
+  });
+  resolve();
 });
-let socket;
-
-const eventSubscribers = {
-  append: (event) => {
-    estimates._append(event.name, event.point);
-  },
-  remove: (event) => {
-    estimates._remove(event.name);
-  },
-  clear: (event) => {
-    estimates._clear();
-  },
-  open: (event) => {
-    tableState._open();
-  },
-  close: (event) => {
-    tableState._close();
-  },
-};
-
-function loadScript(src, callback) {
-  let head = document.getElementsByTagName("head")[0];
-  let script = document.createElement("script");
-  script.src = src;
-  head.appendChild(script);
-  let done = false;
-  script.onload = script.onreadystatechange = () => {
-    if (!done) {
-      done = true;
-      callback();
-      script.onload = script.onreadystatechange = null;
-      if (head && script.parentNode) {
-        head.removeChild(script);
-      }
-    }
-  };
-}
 
 function getSetupedRoomId() {
   const search = window.location.search;
@@ -70,52 +43,45 @@ function getSetupedRoomId() {
   return roomId;
 }
 
-let removeCallback = null;
-
 function createEstimates() {
-  const { subscribe, set, update } = writable([]);
+  const { subscribe, set } = writable([]);
 
-  const sort = (a, b) => a.appendedAt - b.appendedAt;
   return {
     subscribe,
+    set,
     append: (name, point) => {
-      socket.emit("do event", {
-        type: "append",
-        name: name,
-        point: point,
-      });
-    },
-    _append: (name, point) => {
-      update((estimates) => {
-        return [
-          ...estimates.filter((e) => e.name !== name),
-          { name: name, point: point, appendedAt: new Date() },
-        ].sort(sort);
+      roomRef.get().then((documentSnapshot) => {
+        let _estimates = [];
+        let _tableState = { closed: true };
+        if (documentSnapshot && documentSnapshot.exists) {
+          const room = documentSnapshot.data();
+          _estimates = [...room.estimates.filter((e) => e.name !== name)];
+          _tableState = room.tableState;
+        }
+        _estimates.push({
+          name: name,
+          point: point,
+          appendedAt: firebase.firestore.Timestamp.now(),
+        });
+        roomRef.set({
+          estimates: _estimates,
+          tableState: _tableState,
+        });
       });
     },
     remove: (name, callback = null) => {
-      removeCallback = callback;
-      socket.emit("do event", {
-        type: "remove",
-        name: name,
+      roomRef.get().then((documentSnapshot) => {
+        if (documentSnapshot && documentSnapshot.exists) {
+          const room = documentSnapshot.data();
+          room.estimates = room.estimates.filter((e) => e.name !== name);
+          roomRef.set(room).then(callback);
+        } else {
+          callback();
+        }
       });
-    },
-    _remove: (name) => {
-      update((estimates) => {
-        return [...estimates.filter((e) => e.name !== name)].sort(sort);
-      });
-      if (removeCallback) {
-        removeCallback();
-        removeCallback = null;
-      }
     },
     clear: () => {
-      socket.emit("do event", {
-        type: "clear",
-      });
-    },
-    _clear: () => {
-      update((estimates) => []);
+      roomRef.delete();
     },
   };
 }
@@ -125,31 +91,20 @@ function createTableState() {
 
   return {
     subscribe,
+    set,
     open: () => {
-      socket.emit("do event", {
-        type: "open",
-      });
-    },
-    _open: () => {
-      update(() => {
-        return { closed: false };
+      roomRef.get().then((documentSnapshot) => {
+        if (documentSnapshot && documentSnapshot.exists) {
+          const room = documentSnapshot.data();
+          room.tableState = {
+            closed: false,
+          };
+          roomRef.set(room);
+        }
       });
     },
     close: () => {
-      socket.emit("do event", {
-        type: "close",
-      });
-    },
-    _close: () => {
-      update(() => {
-        return { closed: true };
-      });
+      roomRef.delete();
     },
   };
-}
-
-function setupWebsocket(roomId) {
-  return window.io(
-    "https://simple-websocket-server.herokuapp.com/?roomId=" + roomId
-  );
 }
