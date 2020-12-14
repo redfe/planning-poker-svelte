@@ -41,11 +41,7 @@
 
 <style>
   .table {
-    background: linear-gradient(
-      140deg,
-      #6fa27f 30%,
-      rgba(111, 162, 127, 0.6274509803921569)
-    );
+    background: rgba(111, 162, 127, 0.8);
     padding: 1rem 1rem 0 0;
     border-radius: 20px;
     height: 20rem;

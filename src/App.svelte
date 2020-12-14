@@ -14,15 +14,28 @@
     min-height: 20rem;
   }
   :global(body) {
-    background-image: url(https://redfe.github.io/planning-poker/build/crop011kumakichi0327.jpg);
+    background-image: url(https://source.unsplash.com/random/1600x900/?nature);
     background-repeat: repeat-y;
     background-size: cover;
+    background-blend-mode: overlay;
+    padding: 0;
   }
 
+  main {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    padding: 0 2rem;
+  }
   h1 {
-    color: #0d2356;
+    color: white;
     font-size: 2em;
     font-weight: 700;
+    margin-top: 0;
+    padding-top: 5rem;
+  }
+
+  p {
+    color: white;
   }
 
   @media (min-width: 640px) {
