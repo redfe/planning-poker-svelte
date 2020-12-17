@@ -2,22 +2,31 @@
   import Table from "./Table.svelte";
   import UserSelection from "./UserSelection.svelte";
   import { setup } from "./stores.js";
-  import { onMount, afterUpdate } from "svelte";
   export let name;
+  let height = "auto";
+  let title;
+  const changeHeight = () => {
+    height =
+      document.documentElement.offsetHeight <
+      document.documentElement.scrollHeight
+        ? "auto"
+        : "100%";
+  };
+  $: {
+    if (title) {
+      changeHeight();
+    }
+  }
 </script>
 
 <style>
   main {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
     text-align: center;
     max-width: 20rem;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 0 1.5rem;
+    height: 100%;
   }
   :global(body) {
     background-image: url(https://source.unsplash.com/random/1600x900/?nature);
@@ -56,11 +65,13 @@
     rel="stylesheet" />
 </svelte:head>
 
-<main>
+<svelte:window on:resize={changeHeight} />
+
+<main style="height: {height}">
   {#await setup}
     <p>...waiting</p>
   {:then}
-    <h1>Planning Poker</h1>
+    <h1 bind:this={title}>{name}</h1>
     <p>share the URL of this page with your team members.</p>
     <Table />
     <UserSelection />
