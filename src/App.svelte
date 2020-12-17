@@ -2,20 +2,17 @@
   import Table from "./Table.svelte";
   import UserSelection from "./UserSelection.svelte";
   import { setup } from "./stores.js";
-  import { afterUpdate } from "svelte";
+  import { onMount, afterUpdate } from "svelte";
   export let name;
-
-  let height = "auto";
-  const changeHeight = () => {
-    const offsetHeight = document.documentElement.offsetHeight;
-    const scrollHeight = document.documentElement.scrollHeight;
-    height = offsetHeight < scrollHeight ? "auto" : scrollHeight + "px";
-  };
-  afterUpdate(changeHeight);
 </script>
 
 <style>
   main {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
     text-align: center;
     max-width: 20rem;
     margin: 0 auto;
@@ -59,9 +56,7 @@
     rel="stylesheet" />
 </svelte:head>
 
-<svelte:window on:resize={changeHeight} />
-
-<main style="height: {height}">
+<main>
   {#await setup}
     <p>...waiting</p>
   {:then}
