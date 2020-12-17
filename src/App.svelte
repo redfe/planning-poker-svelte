@@ -2,16 +2,25 @@
   import Table from "./Table.svelte";
   import UserSelection from "./UserSelection.svelte";
   import { setup } from "./stores.js";
+  import { afterUpdate } from "svelte";
   export let name;
+
+  let height = "auto";
+  const changeHeight = () => {
+    const offsetHeight = document.documentElement.offsetHeight;
+    const scrollHeight = document.documentElement.scrollHeight;
+    height = offsetHeight < scrollHeight ? "auto" : scrollHeight + "px";
+  };
+  afterUpdate(changeHeight);
 </script>
 
 <style>
   main {
     text-align: center;
-    padding: 1em;
     max-width: 20rem;
     margin: 0 auto;
-    min-height: 20rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0 1.5rem;
   }
   :global(body) {
     background-image: url(https://source.unsplash.com/random/1600x900/?nature);
@@ -21,17 +30,12 @@
     padding: 0;
   }
 
-  main {
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 100%;
-    padding: 0 2rem;
-  }
   h1 {
     color: white;
     font-size: 2em;
     font-weight: 700;
     margin-top: 0;
-    padding-top: 5rem;
+    padding-top: 3rem;
   }
 
   p {
@@ -55,7 +59,9 @@
     rel="stylesheet" />
 </svelte:head>
 
-<main>
+<svelte:window on:resize={changeHeight} />
+
+<main style="height: {height}">
   {#await setup}
     <p>...waiting</p>
   {:then}
