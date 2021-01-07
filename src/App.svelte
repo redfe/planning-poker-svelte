@@ -29,7 +29,7 @@
     height: 100%;
   }
   :global(body) {
-    background-image: url(https://source.unsplash.com/random/1600x900/?nature);
+    background-image: url(https://source.unsplash.com/1600x900/?nature);
     background-repeat: repeat-y;
     background-size: cover;
     background-blend-mode: overlay;
