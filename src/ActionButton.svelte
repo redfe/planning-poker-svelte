@@ -1,10 +1,8 @@
 <script>
-  export let click;
   export let disabled = false;
-  export let myClass = "";
 </script>
 
-<button class={myClass} on:click={click} {disabled}><slot /></button>
+<button class={$$props.class} on:click {disabled}><slot /></button>
 
 <style>
   button {

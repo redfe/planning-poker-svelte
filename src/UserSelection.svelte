@@ -42,7 +42,7 @@
   {:else}
     <div class="user-name">
       <input bind:value={inputedName} placeholder="your name" />
-      <ActionButton myClass="ok-button" click={fixName} disabled={!inputedName}
+      <ActionButton class="ok-button" on:click={fixName} disabled={!inputedName}
         >OK</ActionButton
       >
     </div>

@@ -50,12 +50,12 @@
     {/each}
   </div>
   {#if $estimates.length > 0 || !$tableState.closed}
-    <ActionButton myClass="open-button" click={handleOpenButtonClick}>
+    <ActionButton class="open-button" on:click={handleOpenButtonClick}>
       {$tableState.closed ? "OPEN" : "RETURN"}
     </ActionButton>
   {/if}
   {#if !$tableState.closed}
-    <ActionButton myClass="copy-button" click={handleCopyButtonClick}>
+    <ActionButton class="copy-button" on:click={handleCopyButtonClick}>
       COPY
     </ActionButton>
   {/if}
