@@ -3,7 +3,6 @@
   import Card from "./Card.svelte";
   let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
   let name;
-  while (!(name = window.prompt("your name"))) {}
   $: selectedPoint = $estimates
     .filter((e) => e.name === name)
     .map((e) => e.point)
@@ -43,14 +42,35 @@
     padding: 0.75rem 0;
     font-size: 2rem;
   }
+
+  .user-name input {
+    text-align: center;
+    color: white;
+    background: none;
+    padding: 0;
+    max-width: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .user-name input::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .user-name input:focus {
+    outline: none;
+  }
 </style>
 
 <div>
-  <div class="user-name">{name}</div>
-  {#each points as point}
-    <Card
-      {point}
-      selected={selectedPoint === point}
-      on:selectCard={handleSelectCard} />
-  {/each}
+  <div class="user-name">
+    <input bind:value={name} placeholder="your name" />
+  </div>
+  {#if name}
+    {#each points as point}
+      <Card
+        {point}
+        selected={selectedPoint === point}
+        on:selectCard={handleSelectCard} />
+    {/each}
+  {:else}{/if}
 </div>
