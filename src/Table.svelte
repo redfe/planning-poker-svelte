@@ -3,6 +3,9 @@
   import { estimates, tableState } from "./stores.js";
   import Card from "./Card.svelte";
   import ActionButton from "./ActionButton.svelte";
+
+  let copyButtonName = "COPY";
+
   function handleOpenButtonClick(event) {
     if ($tableState.closed) {
       if ($estimates.length > 0) {
@@ -17,6 +20,15 @@
   function handleCopyButtonClick(event) {
     const text = createCopyText();
     navigator.clipboard.writeText(text);
+    event.target.classList.add("copied");
+    event.target.disabled = true;
+    const srcName = copyButtonName;
+    copyButtonName = "COPIED!";
+    setTimeout(() => {
+      event.target.classList.remove("copied");
+      event.target.disabled = false;
+      copyButtonName = srcName;
+    }, 2000);
   }
 
   function createCopyText() {
@@ -56,7 +68,7 @@
   {/if}
   {#if !$tableState.closed}
     <ActionButton class="copy-button" on:click={handleCopyButtonClick}>
-      COPY
+      {copyButtonName}
     </ActionButton>
   {/if}
 </div>
@@ -110,8 +122,15 @@
     border-radius: 0 1.2rem;
     font-size: 0.5rem;
     padding: 0.25rem;
-    width: 3rem;
+    width: 4rem;
     box-shadow: -1px 3px 3px 0 rgba(0, 0, 0, 0.15);
+    transition: color 1s, box-shadow 0 1s;
+  }
+  .table :global(.copy-button.copied) {
+    color: rgb(161, 18, 18);
+    box-shadow: none;
+    font-size: 0.2rem;
+    font-weight: bold;
   }
   .table :global(.copy-button:active) {
     transform: translateY(2px) translateX(-2px);
