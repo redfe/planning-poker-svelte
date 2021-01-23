@@ -103,6 +103,9 @@
   }
   .name {
     color: white;
+    word-break: break-all;
+    overflow-y: hidden;
+    height: 3rem;
   }
   .table :global(.open-button) {
     margin: 2rem auto;
