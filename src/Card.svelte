@@ -12,6 +12,10 @@
   }
 </script>
 
+<div class="card" class:closed class:selected on:click={selectCard}>
+  {closed ? "" : point}
+</div>
+
 <style>
   .card {
     border-radius: 0.5rem;
@@ -27,7 +31,3 @@
     background-color: #260fa0;
   }
 </style>
-
-<div class="card" class:closed class:selected on:click={selectCard}>
-  {closed ? '' : point}
-</div>
