@@ -1,12 +1,19 @@
 <script>
   import { estimates } from "./stores.js";
   import Card from "./Card.svelte";
+  import ActionButton from "./ActionButton.svelte";
   let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
   let name;
+  let inputedName;
   $: selectedPoint = $estimates
     .filter((e) => e.name === name)
     .map((e) => e.point)
     .pop();
+  function fixName(event) {
+    if (inputedName) {
+      name = inputedName;
+    }
+  }
   function handleSelectCard(event) {
     const appendCallback = () => estimates.append(name, event.detail.point);
     if (selectedPoint) {
@@ -21,6 +28,26 @@
     }
   }
 </script>
+
+<div>
+  {#if name}
+    <div class="user-name">{name}</div>
+    {#each points as point}
+      <Card
+        {point}
+        selected={selectedPoint === point}
+        on:selectCard={handleSelectCard}
+      />
+    {/each}
+  {:else}
+    <div class="user-name">
+      <input bind:value={inputedName} placeholder="your name" />
+      <ActionButton myClass="ok-button" click={fixName} disabled={!inputedName}
+        >OK</ActionButton
+      >
+    </div>
+  {/if}
+</div>
 
 <style>
   div > :global(.card) {
@@ -48,29 +75,25 @@
     color: white;
     background: none;
     padding: 0;
-    max-width: 100%;
+    max-width: 70%;
     border-top: none;
     border-left: none;
     border-right: none;
+    border-bottom: white solid 1px;
   }
   .user-name input::placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
   }
   .user-name input:focus {
     outline: none;
   }
-</style>
 
-<div>
-  <div class="user-name">
-    <input bind:value={name} placeholder="your name" />
-  </div>
-  {#if name}
-    {#each points as point}
-      <Card
-        {point}
-        selected={selectedPoint === point}
-        on:selectCard={handleSelectCard} />
-    {/each}
-  {:else}{/if}
-</div>
+  .user-name :global(.ok-button) {
+    margin: 0 auto;
+    width: 5rem;
+    max-width: 100%;
+  }
+  .user-name :global(.ok-button:disabled) {
+    color: rgba(0, 0, 0, 0.3);
+  }
+</style>

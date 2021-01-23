@@ -2,6 +2,7 @@
   import { fly } from "svelte/transition";
   import { estimates, tableState } from "./stores.js";
   import Card from "./Card.svelte";
+  import ActionButton from "./ActionButton.svelte";
   function handleOpenButtonClick(event) {
     if ($tableState.closed) {
       if ($estimates.length > 0) {
@@ -39,6 +40,27 @@
   }
 </script>
 
+<div class="table">
+  <div class="estimates">
+    {#each $estimates as estimate (estimate.name)}
+      <div class="estimate" transition:fly={{ y: 100 }}>
+        <Card point={estimate.point} closed={$tableState.closed} />
+        <div class="name">{estimate.name}</div>
+      </div>
+    {/each}
+  </div>
+  {#if $estimates.length > 0 || !$tableState.closed}
+    <ActionButton myClass="open-button" click={handleOpenButtonClick}>
+      {$tableState.closed ? "OPEN" : "RETURN"}
+    </ActionButton>
+  {/if}
+  {#if !$tableState.closed}
+    <ActionButton myClass="copy-button" click={handleCopyButtonClick}>
+      COPY
+    </ActionButton>
+  {/if}
+</div>
+
 <style>
   .table {
     background: rgba(111, 162, 127, 0.8);
@@ -70,60 +92,29 @@
   .name {
     color: white;
   }
-  .open-button {
+  .table :global(.open-button) {
     margin: 2rem auto;
     width: 15rem;
-    text-align: center;
     font-size: 2rem;
     border-radius: 0.5rem;
-    background-color: silver;
-    cursor: pointer;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.15);
-    transition: transform 0.1s ease-in-out 0s;
-    user-select: none;
   }
-  .open-button:active {
+  .table :global(.open-button:active) {
     transform: translateY(2px);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
   }
-  .copy-button {
+  .table :global(.copy-button) {
     position: absolute;
     display: inline-block;
     top: 0;
     right: 0;
-    background-color: silver;
     border-radius: 0 1.2rem;
     font-size: 0.5rem;
     padding: 0.25rem;
-    cursor: pointer;
-    text-align: center;
-    width: 2rem;
+    width: 3rem;
     box-shadow: -1px 3px 3px 0 rgba(0, 0, 0, 0.15);
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
   }
-  .copy-button:active {
+  .table :global(.copy-button:active) {
     transform: translateY(2px) translateX(-2px);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
   }
 </style>
-
-<div class="table">
-  <div class="estimates">
-    {#each $estimates as estimate (estimate.name)}
-      <div class="estimate" transition:fly={{ y: 100 }}>
-        <Card point={estimate.point} closed={$tableState.closed} />
-        <div class="name">{estimate.name}</div>
-      </div>
-    {/each}
-  </div>
-  {#if $estimates.length > 0 || !$tableState.closed}
-    <div class="open-button" on:click={handleOpenButtonClick}>
-      {$tableState.closed ? 'open' : 'return'}
-    </div>
-  {/if}
-  {#if !$tableState.closed}
-    <div class="copy-button" on:click={handleCopyButtonClick}>Copy</div>
-  {/if}
-</div>
