@@ -62,9 +62,11 @@
     {/each}
   </div>
   {#if $estimates.length > 0 || !$tableState.closed}
-    <ActionButton class="open-button" on:click={handleOpenButtonClick}>
-      {$tableState.closed ? "OPEN" : "RETURN"}
-    </ActionButton>
+    <div class="open-button-area">
+      <ActionButton class="open-button" on:click={handleOpenButtonClick}>
+        {$tableState.closed ? "OPEN" : "RETURN"}
+      </ActionButton>
+    </div>
   {/if}
   {#if !$tableState.closed}
     <ActionButton class="copy-button" on:click={handleCopyButtonClick}>
@@ -75,29 +77,31 @@
 
 <style>
   .table {
+    position: relative;
     background: rgba(111, 162, 127, 0.8);
-    padding: 1rem 1rem 0 0;
+    padding: 1.5rem 1rem 4rem 1rem;
     border-radius: 20px;
-    height: 20rem;
+    min-height: 18rem;
     position: relative;
     box-shadow: 0 4px 3px 3px rgba(0, 0, 0, 0.15);
     margin-top: 2rem;
   }
   .estimates {
+    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    height: 70%;
+    width: 90%;
   }
   .estimate {
-    margin: 0 0 2rem 2rem;
-    width: 3.5rem;
+    margin: 0.5rem;
+    width: 5rem;
     display: inline-block;
   }
   .estimate > :global(.card) {
+    margin: 0 auto;
     padding-top: 1rem;
     height: 4rem;
-    width: 100%;
+    width: 3.5rem;
     font-size: 2rem;
     transition: background-color 0.2s ease-in-out 0s;
   }
@@ -107,9 +111,15 @@
     overflow-y: hidden;
     height: 3rem;
   }
+  .table .open-button-area {
+    position: absolute;
+    bottom: 0.5rem;
+    width: 100%;
+    left: 0;
+  }
   .table :global(.open-button) {
-    margin: 2rem auto;
-    width: 15rem;
+    margin: 0 auto;
+    width: 10rem;
     font-size: 2rem;
     border-radius: 0.5rem;
   }
