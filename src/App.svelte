@@ -1,6 +1,7 @@
 <script>
   import Table from "./Table.svelte";
   import UserSelection from "./UserSelection.svelte";
+  import UnsplashCredit from "./UnsplashCredit.svelte";
   import { setup } from "./stores.js";
   export let name;
   let height = "auto";
@@ -38,6 +39,7 @@
     <Table />
     <UserSelection />
   {/await}
+  <UnsplashCredit />
 </main>
 
 <style>
