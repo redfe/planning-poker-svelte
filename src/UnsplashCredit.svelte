@@ -1,5 +1,4 @@
-<!-- src: -->
-<div class="unsplash">
+<div class="unsplash-credit">
   <a
     href="https://unsplash.com"
     target="_blank"
@@ -22,7 +21,7 @@
 </div>
 
 <style>
-  .unsplash {
+  .unsplash-credit {
     background-color: rgba(255, 255, 255, 0.5);
     position: absolute;
     right: 0.75rem;
@@ -30,7 +29,7 @@
     padding: 0.5rem;
     padding-bottom: 0.1rem;
   }
-  .unsplash:hover {
+  .unsplash-credit:hover {
     background-color: rgba(255, 255, 255, 0.8);
   }
 </style>
