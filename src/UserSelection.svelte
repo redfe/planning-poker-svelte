@@ -42,6 +42,7 @@
   {:else}
     <div class="user-name">
       <form on:submit|preventDefault={fixName}>
+        <!-- svelte-ignore a11y-autofocus -->
         <input bind:value={inputedName} placeholder="your name" autofocus />
         {#if inputedName}
           <ActionButton class="ok-button" on:click={fixName}>OK</ActionButton>
