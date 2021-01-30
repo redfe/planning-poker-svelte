@@ -120,7 +120,7 @@
   .table :global(.open-button) {
     margin: 0 auto;
     width: 10rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     border-radius: 0.5rem;
   }
   .table :global(.open-button:active) {

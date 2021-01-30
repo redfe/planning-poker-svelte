@@ -94,5 +94,6 @@
     margin: 0 auto;
     width: 5rem;
     max-width: 100%;
+    font-size: 1.5rem;
   }
 </style>
