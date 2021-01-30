@@ -41,10 +41,12 @@
     {/each}
   {:else}
     <div class="user-name">
-      <input bind:value={inputedName} placeholder="your name" />
-      {#if inputedName}
-        <ActionButton class="ok-button" on:click={fixName}>OK</ActionButton>
-      {/if}
+      <form on:submit|preventDefault={fixName}>
+        <input bind:value={inputedName} placeholder="your name" autofocus />
+        {#if inputedName}
+          <ActionButton class="ok-button" on:click={fixName}>OK</ActionButton>
+        {/if}
+      </form>
     </div>
   {/if}
 </div>
@@ -92,8 +94,5 @@
     margin: 0 auto;
     width: 5rem;
     max-width: 100%;
-  }
-  .user-name :global(.ok-button:disabled) {
-    color: rgba(0, 0, 0, 0.3);
   }
 </style>
