@@ -4,8 +4,7 @@
   import UnsplashCredit from "./UnsplashCredit.svelte";
   import { setup } from "./stores.js";
   export let name;
-  let height = "auto";
-  let title;
+  let height = null;
   const changeHeight = () => {
     height =
       document.documentElement.offsetHeight <
@@ -13,11 +12,6 @@
         ? "auto"
         : "100%";
   };
-  $: {
-    if (title) {
-      changeHeight();
-    }
-  }
 </script>
 
 <svelte:head>
@@ -28,13 +22,13 @@
   />
 </svelte:head>
 
-<svelte:window on:resize={changeHeight} />
+<svelte:window on:resize={changeHeight} on:load={changeHeight} />
 
 <main style="height: {height}">
   {#await setup}
     <p>...waiting</p>
   {:then}
-    <h1 bind:this={title}>{name}</h1>
+    <h1>{name}</h1>
     <p>share the URL of this page with your team members.</p>
     <Table />
     <UserSelection />
@@ -49,7 +43,6 @@
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 0 1.5rem;
-    height: 100%;
   }
   :global(body) {
     background-image: url(https://source.unsplash.com/1600x900/?nature);
