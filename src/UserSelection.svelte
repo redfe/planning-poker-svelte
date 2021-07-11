@@ -4,7 +4,7 @@
   import ActionButton from "./ActionButton.svelte";
   let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
   let name;
-  let inputedName;
+  let inputedName = window.localStorage.name;
   $: selectedPoint = $estimates
     .filter((e) => e.name === name)
     .map((e) => e.point)
@@ -12,6 +12,7 @@
   function fixName(event) {
     if (inputedName) {
       name = inputedName;
+      window.localStorage.setItem("name", name);
     }
   }
   function handleSelectCard(event) {
