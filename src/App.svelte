@@ -33,16 +33,36 @@
     <Table />
     <UserSelection />
   {/await}
-  <UnsplashCredit />
 </main>
+<UnsplashCredit />
 
 <style>
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes bgFadeIn {
+    0% {
+      background-color: rgba(0, 0, 0, 1);
+    }
+    100% {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
   main {
     text-align: center;
     max-width: 42rem;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 0 1.5rem;
+    animation: 2s fadeIn forwards;
   }
   :global(body) {
     background-image: url(https://source.unsplash.com/1600x900/?nature);
@@ -51,6 +71,7 @@
     background-blend-mode: overlay;
     padding: 0;
     font-family: "M PLUS 1p";
+    animation: 3s bgFadeIn forwards;
   }
 
   h1 {
