@@ -1,7 +1,7 @@
 <script>
   import { estimates } from "./stores.js";
-  import Card from "./Card.svelte";
-  import ActionButton from "./ActionButton.svelte";
+  import Card from "./ui_modules/card/Card.svelte";
+  import OkButton from "./ui_modules/ok_button/OkButton.svelte";
   let points = ["0", "1", "2", "3", "5", "8", "13", "21", "34", "55", "?", "∞"];
   let name;
   let inputedName = window.localStorage.name;
@@ -36,6 +36,8 @@
     {#each points as point}
       <Card
         {point}
+        selectable={true}
+        size={"medium"}
         selected={selectedPoint === point}
         on:selectCard={handleSelectCard}
       />
@@ -46,7 +48,7 @@
         <!-- svelte-ignore a11y-autofocus -->
         <input bind:value={inputedName} placeholder="your name" autofocus />
         {#if inputedName}
-          <ActionButton class="ok-button" on:click={fixName}>OK</ActionButton>
+          <OkButton on:click={fixName} />
         {/if}
       </form>
     </div>
@@ -57,14 +59,8 @@
   div > :global(.card) {
     display: inline-block;
     margin: 0 0 0.75rem 0.75rem;
-    padding: 1rem 0.5rem;
-    width: 1.5rem;
-    cursor: pointer;
     border-width: 2px;
     transition: background-color 0.2s ease-in-out 0s;
-  }
-  div > :global(.card):hover {
-    background-color: #e8bcbc;
   }
 
   .user-name {
@@ -90,12 +86,5 @@
   }
   .user-name input:focus {
     outline: none;
-  }
-
-  .user-name :global(.ok-button) {
-    margin: 0 auto;
-    width: 5rem;
-    max-width: 100%;
-    font-size: 1.5rem;
   }
 </style>

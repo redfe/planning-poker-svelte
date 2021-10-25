@@ -1,10 +1,21 @@
 <script>
-  export let disabled = false;
+  export let isClosed = true;
 </script>
 
-<button class={$$props.class} on:click {disabled}><slot /></button>
+<button class={"open-button"} on:click>{isClosed ? "OPEN" : "RETURN"}</button>
 
 <style>
+  .open-button {
+    margin: 0 auto;
+    width: 10rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+  }
+  .open-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+  }
+
   button {
     text-align: center;
     border: none;

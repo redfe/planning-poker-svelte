@@ -1,10 +1,11 @@
 <script>
   import { fly } from "svelte/transition";
   import { estimates, tableState } from "./stores.js";
-  import Card from "./Card.svelte";
-  import ActionButton from "./ActionButton.svelte";
+  import Card from "./ui_modules/card/Card.svelte";
+  import OpenButton from "./ui_modules/open_button/OpenButton.svelte";
+  import CopyButton from "./ui_modules/copy_button/CopyButton.svelte";
 
-  let copyButtonName = "COPY";
+  let isCopied = false;
 
   function handleOpenButtonClick(event) {
     if ($tableState.closed) {
@@ -20,15 +21,10 @@
   function handleCopyButtonClick(event) {
     const text = createCopyText();
     navigator.clipboard.writeText(text);
-    event.target.classList.add("copied");
-    event.target.disabled = true;
-    const srcName = copyButtonName;
-    copyButtonName = "COPIED!";
+    isCopied = true;
     setTimeout(() => {
-      event.target.classList.remove("copied");
-      event.target.disabled = false;
-      copyButtonName = srcName;
-    }, 2000);
+      isCopied = false;
+    }, 1000);
   }
 
   function createCopyText() {
@@ -56,22 +52,26 @@
   <div class="estimates">
     {#each $estimates as estimate (estimate.name)}
       <div class="estimate" transition:fly={{ y: 100 }}>
-        <Card point={estimate.point} closed={$tableState.closed} />
+        <Card
+          point={estimate.point}
+          size={"large"}
+          selectable={false}
+          closed={$tableState.closed}
+        />
         <div class="name">{estimate.name}</div>
       </div>
     {/each}
   </div>
   {#if $estimates.length > 0 || !$tableState.closed}
     <div class="open-button-area">
-      <ActionButton class="open-button" on:click={handleOpenButtonClick}>
-        {$tableState.closed ? "OPEN" : "RETURN"}
-      </ActionButton>
+      <OpenButton
+        isClosed={$tableState.closed}
+        on:click={handleOpenButtonClick}
+      />
     </div>
   {/if}
   {#if !$tableState.closed}
-    <ActionButton class="copy-button" on:click={handleCopyButtonClick}>
-      {copyButtonName}
-    </ActionButton>
+    <CopyButton on:click={handleCopyButtonClick} {isCopied} />
   {/if}
 </div>
 
@@ -99,10 +99,6 @@
   }
   .estimate > :global(.card) {
     margin: 0 auto;
-    padding-top: 1rem;
-    height: 4rem;
-    width: 3.5rem;
-    font-size: 2rem;
     transition: background-color 0.2s ease-in-out 0s;
   }
   .name {
@@ -116,37 +112,5 @@
     bottom: 0.5rem;
     width: 100%;
     left: 0;
-  }
-  .table :global(.open-button) {
-    margin: 0 auto;
-    width: 10rem;
-    font-size: 1.5rem;
-    border-radius: 0.5rem;
-  }
-  .table :global(.open-button:active) {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
-  }
-  .table :global(.copy-button) {
-    position: absolute;
-    display: inline-block;
-    top: 0;
-    right: 0;
-    border-radius: 0 1.2rem;
-    font-size: 0.5rem;
-    padding: 0.25rem;
-    width: 4rem;
-    box-shadow: -1px 3px 3px 0 rgba(0, 0, 0, 0.15);
-    transition: color 1s, box-shadow 0 1s;
-  }
-  .table :global(.copy-button.copied) {
-    color: rgb(161, 18, 18);
-    box-shadow: none;
-    font-size: 0.2rem;
-    font-weight: bold;
-  }
-  .table :global(.copy-button:active) {
-    transform: translateY(2px) translateX(-2px);
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
   }
 </style>
