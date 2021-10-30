@@ -2,11 +2,11 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && rm -rf ./docs/storybook-static && build-storybook -s ./docs && rm -rf ./storybook-static/build && mv storybook-static ./docs/storybook-static",
     "dev": "rollup -c -w",
     "start": "sirv docs",
     "storybook": "start-storybook -p 6006 -s ./docs",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -s ./docs"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",

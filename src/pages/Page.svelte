@@ -43,6 +43,15 @@
       {handleFixName}
       {handleSelectCard}
     />
+    <div class="devinfo">
+      development: <a
+        href="https://github.com/redfe/planning-poker-svelte"
+        target="_blank"
+        rel="noopener noreferrer">Source code</a
+      >,<a href="./storybook-static/" target="_blank" rel="noopener noreferrer"
+        >Storybook</a
+      >.
+    </div>
   </main>
   <UnsplashCredit />
 </div>
@@ -95,6 +104,13 @@
   }
 
   p {
+    color: white;
+  }
+
+  .devinfo {
+    color: white;
+  }
+  .devinfo a {
     color: white;
   }
 
