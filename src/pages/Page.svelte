@@ -1,8 +1,7 @@
 <script>
-  import Table from "../ui_components/table/Table.svelte";
-  import UserSelection from "../ui_components/user_selection/UserSelection.svelte";
+  import Table from "../ui_components/Table.svelte";
+  import UserSelection from "../ui_components/UserSelection.svelte";
   import UnsplashCredit from "../UnsplashCredit.svelte";
-  import { onMount } from "svelte";
 
   export let name;
   export let isTableClosed = true;

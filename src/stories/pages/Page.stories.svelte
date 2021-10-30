@@ -1,6 +1,6 @@
 <script>
   import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import Page from "./Page.svelte";
+  import Page from "../../pages/Page.svelte";
 </script>
 
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->

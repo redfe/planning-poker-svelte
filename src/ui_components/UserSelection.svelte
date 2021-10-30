@@ -1,6 +1,6 @@
 <script>
-  import Card from "../card/Card.svelte";
-  import OkButton from "../ok_button/OkButton.svelte";
+  import Card from "./Card.svelte";
+  import OkButton from "./OkButton.svelte";
   export let userName = "";
   export let isFixedUserName = false;
   export let estimates = [];

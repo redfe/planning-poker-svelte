@@ -1,6 +1,6 @@
 <script>
   import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import UserSelection from "./UserSelection.svelte";
+  import UserSelection from "../../ui_components/UserSelection.svelte";
 
   let estimates = [
     { name: "山田", point: "55" },
@@ -12,7 +12,7 @@
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->
 <!-- More on argTypes: https://storybook.js.org/docs/svelte/api/argtypes -->
 <Meta
-  title="Components/UserSelection/UserSelection"
+  title="Components/UserSelection"
   component={UserSelection}
   argTypes={{
     onClick: { action: "onClick" },

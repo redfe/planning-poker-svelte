@@ -1,8 +1,8 @@
 <script>
   import { fly } from "svelte/transition";
-  import Card from "../card/Card.svelte";
-  import OpenButton from "./open_button/OpenButton.svelte";
-  import CopyButton from "./copy_button/CopyButton.svelte";
+  import Card from "./Card.svelte";
+  import OpenButton from "./OpenButton.svelte";
+  import CopyButton from "./CopyButton.svelte";
 
   export let estimates = [];
   export let isClosed = true;

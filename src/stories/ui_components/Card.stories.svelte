@@ -1,6 +1,6 @@
 <script>
   import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import Card from "./Card.svelte";
+  import Card from "../../ui_components/Card.svelte";
 </script>
 
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->
