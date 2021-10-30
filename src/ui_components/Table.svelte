@@ -105,4 +105,9 @@
     width: 100%;
     left: 0;
   }
+
+  .table :global(.copy-button) {
+    top: 0px;
+    right: 0px;
+  }
 </style>

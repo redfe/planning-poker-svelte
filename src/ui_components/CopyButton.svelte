@@ -12,8 +12,6 @@
   .copy-button {
     position: absolute;
     display: inline-block;
-    top: 0;
-    right: 0;
     border-radius: 0 1.2rem;
     font-size: 0.5rem;
     padding: 0.25rem;
