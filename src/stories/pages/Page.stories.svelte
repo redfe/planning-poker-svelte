@@ -9,7 +9,10 @@
   title="Pages/Page"
   component={Page}
   argTypes={{
-    onClick: { action: "onClick" },
+    handleOpenButtonClick: { action: "handleOpenButtonClick" },
+    handleFixName: { action: "handleFixName" },
+    handleSelectCard: { action: "handleSelectCard" },
+    handleOkButtonClick: { action: "handleOkButtonClick" },
   }}
 />
 
@@ -17,9 +20,10 @@
 <Template let:args>
   <Page
     {...args}
-    handleOpenButtonClick={args.onClick}
-    handleFixName={args.onClick}
-    handleSelectCard={args.onClick}
+    handleOpenButtonClick={args.handleOpenButtonClick}
+    handleFixName={args.handleFixName}
+    handleSelectCard={args.handleSelectCard}
+    handleOkButtonClick={args.handleOkButtonClick}
   />
 </Template>
 
