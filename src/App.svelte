@@ -1,17 +1,49 @@
 <script>
-  import Table from "./Table.svelte";
-  import UserSelection from "./UserSelection.svelte";
-  import UnsplashCredit from "./UnsplashCredit.svelte";
+  import { estimates, tableState } from "./stores.js";
+  import Page from "./pages/Page.svelte";
   import { setup } from "./stores.js";
   export let name;
-  let height = null;
-  const changeHeight = () => {
-    height =
-      document.documentElement.offsetHeight <
-      document.documentElement.scrollHeight
-        ? "auto"
-        : "100%";
-  };
+
+  let userName = window.localStorage.name || "";
+  let isFixedUserName = false;
+
+  function handleOpenButtonClick(event) {
+    if ($tableState.closed) {
+      if ($estimates.length > 0) {
+        tableState.open();
+      }
+    } else {
+      estimates.clear();
+      tableState.close();
+    }
+  }
+
+  $: selectedPoint = $estimates
+    .filter((e) => e.name === userName)
+    .map((e) => e.point)
+    .pop();
+
+  function handleFixName(inputedName) {
+    if (inputedName) {
+      userName = inputedName;
+      window.localStorage.setItem("name", userName);
+      isFixedUserName = true;
+    }
+  }
+
+  function handleSelectCard(event) {
+    const appendCallback = () => estimates.append(userName, event.detail.point);
+    if (selectedPoint) {
+      estimates.remove(
+        userName,
+        selectedPoint === event.detail.point
+          ? null
+          : () => setTimeout(appendCallback, 300)
+      );
+    } else {
+      appendCallback();
+    }
+  }
 </script>
 
 <svelte:head>
@@ -22,73 +54,17 @@
   />
 </svelte:head>
 
-<svelte:window on:resize={changeHeight} on:load={changeHeight} />
-
-<main style="height: {height}">
-  {#await setup}
-    <p>...waiting</p>
-  {:then}
-    <h1>{name}</h1>
-    <p>share the URL of this page with your team members.</p>
-    <Table />
-    <UserSelection />
-  {/await}
-</main>
-<UnsplashCredit />
-
-<style>
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  @keyframes bgFadeIn {
-    0% {
-      background-color: rgba(0, 0, 0, 1);
-    }
-    100% {
-      background-color: rgba(0, 0, 0, 0);
-    }
-  }
-  main {
-    text-align: center;
-    max-width: 42rem;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0 1.5rem;
-    animation: 2s fadeIn forwards;
-  }
-  :global(body) {
-    background-image: url(https://source.unsplash.com/1600x900/?nature);
-    background-repeat: repeat-y;
-    background-size: cover;
-    background-blend-mode: overlay;
-    padding: 0;
-    font-family: "M PLUS 1p";
-    animation: 3s bgFadeIn forwards;
-  }
-
-  h1 {
-    color: white;
-    font-size: 2em;
-    font-weight: 700;
-    margin-top: 0;
-    padding-top: 3rem;
-  }
-
-  p {
-    color: white;
-  }
-
-  @media (max-width: 639px) {
-    :global(body) {
-      zoom: 0.9;
-    }
-  }
-</style>
+{#await setup}
+  <p>...waiting</p>
+{:then}
+  <Page
+    {name}
+    isTableClosed={$tableState.closed}
+    estimates={$estimates}
+    {userName}
+    {isFixedUserName}
+    {handleOpenButtonClick}
+    {handleFixName}
+    {handleSelectCard}
+  />
+{/await}

@@ -17,6 +17,7 @@
   }
 
   button {
+    font-family: inherit;
     text-align: center;
     border: none;
     border-radius: 0.5rem;

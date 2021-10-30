@@ -1,22 +1,16 @@
 <script>
   import { fly } from "svelte/transition";
-  import { estimates, tableState } from "./stores.js";
-  import Card from "./ui_modules/card/Card.svelte";
-  import OpenButton from "./ui_modules/open_button/OpenButton.svelte";
-  import CopyButton from "./ui_modules/copy_button/CopyButton.svelte";
+  import Card from "../card/Card.svelte";
+  import OpenButton from "./open_button/OpenButton.svelte";
+  import CopyButton from "./copy_button/CopyButton.svelte";
+
+  export let estimates = [];
+  export let isClosed = true;
+  export let handleOpenButtonClick = () => {};
+
+  estimates = estimates || [];
 
   let isCopied = false;
-
-  function handleOpenButtonClick(event) {
-    if ($tableState.closed) {
-      if ($estimates.length > 0) {
-        tableState.open();
-      }
-    } else {
-      estimates.clear();
-      tableState.close();
-    }
-  }
 
   function handleCopyButtonClick(event) {
     const text = createCopyText();
@@ -28,7 +22,7 @@
   }
 
   function createCopyText() {
-    if ($estimates.length === 0) {
+    if (estimates.length === 0) {
       return "empty.";
     }
     const now = new Date();
@@ -38,7 +32,7 @@
       " " +
       now.toLocaleTimeString() +
       "] " +
-      $estimates
+      estimates
         .sort((e1, e2) => (e1.name > e2.name ? 1 : -1))
         .reduce(
           (acc, cur) => (acc ? acc + " " : "") + `${cur.name}(${cur.point})`,
@@ -50,27 +44,24 @@
 
 <div class="table">
   <div class="estimates">
-    {#each $estimates as estimate (estimate.name)}
+    {#each estimates as estimate (estimate.name)}
       <div class="estimate" transition:fly={{ y: 100 }}>
         <Card
           point={estimate.point}
           size={"large"}
           selectable={false}
-          closed={$tableState.closed}
+          closed={isClosed}
         />
         <div class="name">{estimate.name}</div>
       </div>
     {/each}
   </div>
-  {#if $estimates.length > 0 || !$tableState.closed}
+  {#if estimates.length > 0 || !isClosed}
     <div class="open-button-area">
-      <OpenButton
-        isClosed={$tableState.closed}
-        on:click={handleOpenButtonClick}
-      />
+      <OpenButton {isClosed} on:click={handleOpenButtonClick} />
     </div>
   {/if}
-  {#if !$tableState.closed}
+  {#if !isClosed}
     <CopyButton on:click={handleCopyButtonClick} {isCopied} />
   {/if}
 </div>
@@ -96,6 +87,7 @@
     margin: 0.5rem;
     width: 5rem;
     display: inline-block;
+    text-align: center;
   }
   .estimate > :global(.card) {
     margin: 0 auto;

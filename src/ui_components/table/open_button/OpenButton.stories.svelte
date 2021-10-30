@@ -1,13 +1,13 @@
 <script>
   import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import CopyButton from "./CopyButton.svelte";
+  import OpenButton from "./OpenButton.svelte";
 </script>
 
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->
 <!-- More on argTypes: https://storybook.js.org/docs/svelte/api/argtypes -->
 <Meta
-  title="PlanningPoker/CopyButton"
-  component={CopyButton}
+  title="Components/Table/OpenButton/OpenButton"
+  component={OpenButton}
   argTypes={{
     onClick: { action: "onClick" },
   }}
@@ -15,9 +15,9 @@
 
 <!-- More on component templates: https://storybook.js.org/docs/svelte/writing-stories/introduction#using-args -->
 <Template let:args>
-  <CopyButton {...args} on:click={args.onClick} />
+  <OpenButton {...args} on:click={args.onClick} />
 </Template>
 
-<Story name="Default" args={{}} />
+<Story name="Closed" args={{ isClosed: true }} />
 
-<Story name="Copied" args={{ isCopied: true }} />
+<Story name="Opend" args={{ isClosed: false }} />
