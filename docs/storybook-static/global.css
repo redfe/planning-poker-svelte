@@ -22,6 +22,7 @@ body {
   padding: 0px;
   box-sizing: border-box;
   font-family: "M PLUS 1p";
+  position: relative;
   background-image: url(https://source.unsplash.com/1600x900/?nature);
   background-repeat: repeat-y;
   background-size: cover;
