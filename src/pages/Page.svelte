@@ -87,12 +87,6 @@
   }
   .container {
     position: relative;
-    background-image: url(https://source.unsplash.com/1600x900/?nature);
-    background-repeat: repeat-y;
-    background-size: cover;
-    background-blend-mode: overlay;
-    padding: 0;
-    animation: 3s bgFadeIn forwards;
   }
 
   h1 {

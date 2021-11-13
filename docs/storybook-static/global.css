@@ -7,12 +7,26 @@ body {
   height: 100%;
 }
 
+@keyframes bgFadeIn {
+  0% {
+    background-color: rgba(0, 0, 0, 1);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
 body {
   color: #333;
   margin: 0;
   padding: 0px;
   box-sizing: border-box;
   font-family: "M PLUS 1p";
+  background-image: url(https://source.unsplash.com/1600x900/?nature);
+  background-repeat: repeat-y;
+  background-size: cover;
+  background-blend-mode: overlay;
+  animation: 3s bgFadeIn forwards;
 }
 
 a {
