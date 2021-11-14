@@ -1,6 +1,6 @@
 <script>
-  import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import UserSelection from "../../ui_components/UserSelection.svelte";
+  import { Meta, Template, Story } from '@storybook/addon-svelte-csf';
+  import UserSelection from '../../ui_components/UserSelection.svelte';
 </script>
 
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->
@@ -9,11 +9,11 @@
   title="Components/UserSelection"
   component={UserSelection}
   argTypes={{
-    onClick: { action: "onClick" },
+    onClick: { action: 'onClick' },
   }}
   background={{
     darkMode: {
-      current: "dark",
+      current: 'dark',
     },
   }}
 />
@@ -34,7 +34,7 @@
 <Story
   name="NameInputed"
   args={{
-    userName: "山田",
+    userName: '山田',
     isFixedUserName: false,
   }}
 />
@@ -42,9 +42,9 @@
 <Story
   name="CardSelected"
   args={{
-    userName: "山田",
+    userName: '山田',
     isFixedUserName: true,
-    estimates: [{ name: "山田", point: "55" }],
+    estimates: [{ name: '山田', point: '55' }],
   }}
 />
 

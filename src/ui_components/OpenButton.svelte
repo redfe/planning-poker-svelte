@@ -2,7 +2,7 @@
   export let isClosed = true;
 </script>
 
-<button class={"open-button"} on:click>{isClosed ? "OPEN" : "RETURN"}</button>
+<button class={'open-button'} on:click>{isClosed ? 'OPEN' : 'RETURN'}</button>
 
 <style>
   .open-button {

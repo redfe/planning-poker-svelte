@@ -1,16 +1,16 @@
-import { writable } from "svelte/store";
-import { v4 as uuidv4 } from "uuid";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { writable } from 'svelte/store';
+import { v4 as uuidv4 } from 'uuid';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const firebaseConfig = {
-  projectId: "sample-project-294713",
+  projectId: 'sample-project-294713',
 };
 
 firebase.initializeApp(firebaseConfig);
 const roomId = getSetupedRoomId();
 const db = firebase.firestore();
-const roomRef = db.collection("rooms").doc(roomId);
+const roomRef = db.collection('rooms').doc(roomId);
 
 export const estimates = createEstimates();
 export const tableState = createTableState();
@@ -35,7 +35,7 @@ function getSetupedRoomId() {
   if (!search) {
     const uuid = uuidv4();
     window.location.hash = uuid;
-    window.history.replaceState("", "", "?" + uuid);
+    window.history.replaceState('', '', '?' + uuid);
     roomId = uuid;
   } else {
     roomId = search.substring(1);

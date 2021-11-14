@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<button class={"ok-button"} on:click|preventDefault|stopPropagation>OK</button>
+<button class={'ok-button'} on:click|preventDefault|stopPropagation>OK</button>
 
 <style>
   .ok-button {

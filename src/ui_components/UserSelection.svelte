@@ -1,7 +1,7 @@
 <script>
-  import Card from "./Card.svelte";
-  import OkButton from "./OkButton.svelte";
-  export let userName = "";
+  import Card from './Card.svelte';
+  import OkButton from './OkButton.svelte';
+  export let userName = '';
   export let isFixedUserName = false;
   export let estimates = [];
   export let handleSelectCard;
@@ -10,18 +10,18 @@
   estimates = estimates || [];
 
   const points = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "5",
-    "8",
-    "13",
-    "21",
-    "34",
-    "55",
-    "?",
-    "∞",
+    '0',
+    '1',
+    '2',
+    '3',
+    '5',
+    '8',
+    '13',
+    '21',
+    '34',
+    '55',
+    '?',
+    '∞',
   ];
 
   $: selectedPoint = estimates
@@ -30,14 +30,14 @@
     .pop();
 </script>
 
-<div class={"user-selection"}>
+<div class={'user-selection'}>
   {#if userName && isFixedUserName}
     <div class="user-name">{userName}</div>
     {#each points as point}
       <Card
         {point}
         selectable={true}
-        size={"medium"}
+        size={'medium'}
         selected={selectedPoint === point}
         on:selectCard={handleSelectCard}
       />

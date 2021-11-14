@@ -1,11 +1,11 @@
 <script>
-  import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import Table from "../../ui_components/Table.svelte";
+  import { Meta, Template, Story } from '@storybook/addon-svelte-csf';
+  import Table from '../../ui_components/Table.svelte';
 
   let estimates = [
-    { name: "山田", point: "55" },
-    { name: "鈴木", point: "8" },
-    { name: "田中", point: "13" },
+    { name: '山田', point: '55' },
+    { name: '鈴木', point: '8' },
+    { name: '田中', point: '13' },
   ];
 </script>
 
@@ -15,7 +15,7 @@
   title="Components/Table"
   component={Table}
   argTypes={{
-    onClick: { action: "onClick" },
+    onClick: { action: 'onClick' },
   }}
 />
 

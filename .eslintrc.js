@@ -3,20 +3,20 @@ module.exports = {
     browser: true,
     es2020: true,
   },
-  extends: "eslint:recommended",
+  extends: 'eslint:recommended',
   parserOptions: {
     ecmaVersion: 11,
-    sourceType: "module",
+    sourceType: 'module',
   },
   rules: {
-    semi: ["error", "always"],
-    quotes: ["error", "double"],
+    semi: ['error', 'always'],
+    quotes: ['error', 'single'],
   },
-  plugins: ["svelte3"],
+  plugins: ['svelte3'],
   overrides: [
     {
-      files: ["*.svelte"],
-      processor: "svelte3/svelte3",
+      files: ['*.svelte'],
+      processor: 'svelte3/svelte3',
     },
   ],
 };

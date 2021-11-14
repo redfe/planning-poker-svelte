@@ -1,6 +1,6 @@
 <script>
-  import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import Card from "../../ui_components/Card.svelte";
+  import { Meta, Template, Story } from '@storybook/addon-svelte-csf';
+  import Card from '../../ui_components/Card.svelte';
 </script>
 
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->
@@ -9,12 +9,12 @@
   title="Components/Card"
   component={Card}
   argTypes={{
-    point: { control: "text" },
+    point: { control: 'text' },
     size: {
-      control: { type: "select" },
-      options: ["small", "medium", "large"],
+      control: { type: 'select' },
+      options: ['small', 'medium', 'large'],
     },
-    onClick: { action: "onClick" },
+    onClick: { action: 'onClick' },
   }}
 />
 
@@ -26,7 +26,7 @@
 <Story
   name="DefaultOnUserSelection"
   args={{
-    point: "55",
+    point: '55',
     selectable: true,
     selected: false,
     closed: false,
@@ -36,7 +36,7 @@
 <Story
   name="SelectedOnUserSelection"
   args={{
-    point: "55",
+    point: '55',
     selectable: true,
     selected: true,
     closed: false,
@@ -46,21 +46,21 @@
 <Story
   name="ClosedOnTable"
   args={{
-    point: "55",
+    point: '55',
     selectable: false,
     selected: false,
     closed: true,
-    size: "large",
+    size: 'large',
   }}
 />
 
 <Story
   name="OpendOnTable"
   args={{
-    point: "55",
+    point: '55',
     selectable: false,
     selected: false,
     closed: false,
-    size: "large",
+    size: 'large',
   }}
 />

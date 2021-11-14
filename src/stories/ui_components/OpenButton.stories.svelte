@@ -1,6 +1,6 @@
 <script>
-  import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import OpenButton from "../../ui_components/OpenButton.svelte";
+  import { Meta, Template, Story } from '@storybook/addon-svelte-csf';
+  import OpenButton from '../../ui_components/OpenButton.svelte';
 </script>
 
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->
@@ -9,7 +9,7 @@
   title="Components/OpenButton"
   component={OpenButton}
   argTypes={{
-    onClick: { action: "onClick" },
+    onClick: { action: 'onClick' },
   }}
 />
 

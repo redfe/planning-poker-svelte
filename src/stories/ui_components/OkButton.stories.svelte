@@ -1,6 +1,6 @@
 <script>
-  import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
-  import OkButton from "../../ui_components/OkButton.svelte";
+  import { Meta, Template, Story } from '@storybook/addon-svelte-csf';
+  import OkButton from '../../ui_components/OkButton.svelte';
 </script>
 
 <!-- More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export -->
@@ -9,7 +9,7 @@
   title="Components/OkButton"
   component={OkButton}
   argTypes={{
-    onClick: { action: "onClick" },
+    onClick: { action: 'onClick' },
   }}
 />
 

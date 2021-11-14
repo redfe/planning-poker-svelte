@@ -1,8 +1,8 @@
 <script>
-  import { fly } from "svelte/transition";
-  import Card from "./Card.svelte";
-  import OpenButton from "./OpenButton.svelte";
-  import CopyButton from "./CopyButton.svelte";
+  import { fly } from 'svelte/transition';
+  import Card from './Card.svelte';
+  import OpenButton from './OpenButton.svelte';
+  import CopyButton from './CopyButton.svelte';
 
   export let estimates = [];
   export let isClosed = true;
@@ -23,19 +23,19 @@
 
   function createCopyText() {
     if (estimates.length === 0) {
-      return "empty.";
+      return 'empty.';
     }
     const now = new Date();
     return (
-      "[" +
+      '[' +
       now.toLocaleDateString() +
-      " " +
+      ' ' +
       now.toLocaleTimeString() +
-      "] " +
+      '] ' +
       estimates
         .sort((e1, e2) => (e1.name > e2.name ? 1 : -1))
         .reduce(
-          (acc, cur) => (acc ? acc + " " : "") + `${cur.name}(${cur.point})`,
+          (acc, cur) => (acc ? acc + ' ' : '') + `${cur.name}(${cur.point})`,
           null
         )
     );
@@ -48,7 +48,7 @@
       <div class="estimate" transition:fly={{ y: 100 }}>
         <Card
           point={estimate.point}
-          size={"large"}
+          size={'large'}
           selectable={false}
           closed={isClosed}
         />

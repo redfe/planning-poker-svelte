@@ -3,9 +3,9 @@
 </script>
 
 <button
-  class={["copy-button", isCopied ? "copied" : ""].join(" ")}
+  class={['copy-button', isCopied ? 'copied' : ''].join(' ')}
   on:click
-  disabled={isCopied ? true : false}>{isCopied ? "COPIED" : "COPY"}</button
+  disabled={isCopied ? true : false}>{isCopied ? 'COPIED' : 'COPY'}</button
 >
 
 <style>

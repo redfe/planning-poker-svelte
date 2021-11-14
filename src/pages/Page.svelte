@@ -1,12 +1,12 @@
 <script>
-  import Table from "../ui_components/Table.svelte";
-  import UserSelection from "../ui_components/UserSelection.svelte";
-  import UnsplashCredit from "../UnsplashCredit.svelte";
+  import Table from '../ui_components/Table.svelte';
+  import UserSelection from '../ui_components/UserSelection.svelte';
+  import UnsplashCredit from '../UnsplashCredit.svelte';
 
   export let name;
   export let isTableClosed = true;
   export let estimates = [];
-  export let userName = "";
+  export let userName = '';
   export let isFixedUserName = false;
   export let handleOpenButtonClick;
   export let handleFixName;
@@ -17,12 +17,12 @@
   const calcHeight = () => {
     return document.documentElement.offsetHeight <
       document.documentElement.scrollHeight
-      ? "auto"
-      : "100%";
+      ? 'auto'
+      : '100%';
   };
 
   let height = calcHeight();
-  console.log("height:", height);
+  console.log('height:', height);
 
   const changeHeight = () => {
     height = calcHeight();

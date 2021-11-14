@@ -1,27 +1,27 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte';
   export let point;
   export let selectable = false;
   export let selected = false;
   export let closed = false;
-  export let size = "medium";
+  export let size = 'medium';
   const dispatch = createEventDispatcher();
 
   function selectCard() {
-    dispatch("selectCard", {
+    dispatch('selectCard', {
       point: point,
     });
   }
 </script>
 
 <div
-  class={"card " + size}
+  class={'card ' + size}
   class:selectable
   class:closed
   class:selected
   on:click={selectable ? selectCard : undefined}
 >
-  {closed ? "" : point}
+  {closed ? '' : point}
 </div>
 
 <style>
