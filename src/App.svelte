@@ -7,7 +7,7 @@
   let userName = window.localStorage.name || "";
   let isFixedUserName = false;
 
-  function handleOpenButtonClick(event) {
+  function handleOpenButtonClick() {
     if ($tableState.closed) {
       if ($estimates.length > 0) {
         tableState.open();

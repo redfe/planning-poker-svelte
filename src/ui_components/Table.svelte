@@ -12,7 +12,7 @@
 
   let isCopied = false;
 
-  function handleCopyButtonClick(event) {
+  function handleCopyButtonClick() {
     const text = createCopyText();
     navigator.clipboard.writeText(text);
     isCopied = true;

@@ -1,4 +1,4 @@
-import { writable, get } from "svelte/store";
+import { writable } from "svelte/store";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -87,7 +87,7 @@ function createEstimates() {
 }
 
 function createTableState() {
-  const { subscribe, set, update } = writable({ closed: true });
+  const { subscribe, set } = writable({ closed: true });
 
   return {
     subscribe,
