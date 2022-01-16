@@ -9,7 +9,12 @@
 
   estimates = estimates || [];
 
-  const points = [
+  $: selectedPoint = estimates
+    .filter((e) => e.name === userName)
+    .map((e) => e.point)
+    .pop();
+
+  const fibonacci = [
     '0',
     '1',
     '2',
@@ -23,16 +28,44 @@
     '?',
     '∞',
   ];
+  const ten = [
+    '0',
+    '10',
+    '20',
+    '30',
+    '40',
+    '50',
+    '60',
+    '70',
+    '80',
+    '90',
+    '100',
+    '?',
+    '∞',
+  ];
 
-  $: selectedPoint = estimates
-    .filter((e) => e.name === userName)
-    .map((e) => e.point)
-    .pop();
+  const pointsTemplates = [
+    { id: 'fibonacci', points: fibonacci },
+    { id: 'ten', points: ten },
+  ];
+
+  let selectedPointsTemplateId = pointsTemplates[0].id;
+
+  $: points = pointsTemplates.filter(
+    (p) => selectedPointsTemplateId === p.id
+  )[0].points;
 </script>
 
 <div class={'user-selection'}>
   {#if userName && isFixedUserName}
     <div class="user-name">{userName}</div>
+    <div>
+      <select bind:value={selectedPointsTemplateId}>
+        {#each pointsTemplates as pointsTemplate}
+          <option value={pointsTemplate.id}>{pointsTemplate.id}</option>
+        {/each}
+      </select>
+    </div>
     {#each points as point}
       <Card
         {point}
