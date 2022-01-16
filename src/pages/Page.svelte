@@ -60,18 +60,23 @@
       background-color: rgba(0, 0, 0, 0);
     }
   }
+  :global(html, body) {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
   main {
     text-align: center;
     max-width: 42rem;
-    height: auto;
+    height: 100%;
     margin: 0 auto;
-    margin-top: 1.5rem;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 1.5rem 1.5rem;
     animation: 2s fadeIn forwards;
   }
   .container {
     position: relative;
+    height: 100%;
   }
 
   h1 {
