@@ -25,8 +25,7 @@
       {isFixedUserName}
       {estimates}
       {handleFixName}
-      {handleSelectCard}
-    />
+      {handleSelectCard} />
     <div class="devinfo">
       development: <a
         href="https://github.com/redfe/planning-poker-svelte"
@@ -60,23 +59,18 @@
       background-color: rgba(0, 0, 0, 0);
     }
   }
-  :global(html, body) {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-  }
   main {
+    border-radius: 1.5rem;
     text-align: center;
-    max-width: 42rem;
-    height: 100%;
+    max-width: 45rem;
     margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 1.5rem 1.5rem;
     animation: 2s fadeIn forwards;
   }
   .container {
     position: relative;
-    height: 100%;
+    padding: 1.5rem 0;
   }
 
   h1 {

@@ -50,8 +50,7 @@
           point={estimate.point}
           size={'large'}
           selectable={false}
-          closed={isClosed}
-        />
+          closed={isClosed} />
         <div class="name">{estimate.name}</div>
       </div>
     {/each}
@@ -71,7 +70,7 @@
     position: relative;
     background: rgba(111, 162, 127, 0.8);
     padding: 1.5rem 1rem 4rem 1rem;
-    border-radius: 20px;
+    border-radius: 1.5rem;
     min-height: 18rem;
     position: relative;
     box-shadow: 0 4px 3px 3px rgba(0, 0, 0, 0.15);
