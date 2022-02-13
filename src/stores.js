@@ -1,22 +1,34 @@
 import { writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import {
+  getFirestore,
+  collection,
+  doc,
+  onSnapshot,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  arrayRemove,
+  arrayUnion,
+  Timestamp,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   projectId: 'sample-project-294713',
 };
-
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 const roomId = getSetupedRoomId();
-const db = firebase.firestore();
-const roomRef = db.collection('rooms').doc(roomId);
+const db = getFirestore(firebaseApp);
+const roomCollection = collection(db, 'rooms');
+const roomRef = doc(roomCollection, roomId);
 
 export const estimates = createEstimates();
 export const tableState = createTableState();
 export const setup = new Promise((resolve) => {
-  roomRef.onSnapshot((documentSnapshot) => {
-    if (documentSnapshot && documentSnapshot.exists) {
+  onSnapshot(roomRef, (documentSnapshot) => {
+    if (documentSnapshot && documentSnapshot.exists()) {
       const room = documentSnapshot.data();
       const comparator = (a, b) => a.appendedAt.seconds - b.appendedAt.seconds;
       estimates.set(room.estimates.sort(comparator));
@@ -50,13 +62,13 @@ function createEstimates() {
     subscribe,
     set,
     append: (name, point) => {
-      roomRef.get().then((documentSnapshot) => {
-        if (documentSnapshot && documentSnapshot.exists) {
-          roomRef.update({
-            estimates: firebase.firestore.FieldValue.arrayUnion({
+      getDoc(roomRef).then((documentSnapshot) => {
+        if (documentSnapshot && documentSnapshot.exists()) {
+          updateDoc(roomRef, {
+            estimates: arrayUnion({
               name: name,
               point: point,
-              appendedAt: firebase.firestore.Timestamp.now(),
+              appendedAt: Timestamp.now(),
             }),
           });
         } else {
@@ -65,9 +77,9 @@ function createEstimates() {
           _estimates.push({
             name: name,
             point: point,
-            appendedAt: firebase.firestore.Timestamp.now(),
+            appendedAt: Timestamp.now(),
           });
-          roomRef.set({
+          setDoc(roomRef, {
             estimates: _estimates,
             tableState: _tableState,
           });
@@ -75,18 +87,16 @@ function createEstimates() {
       });
     },
     remove: (name, callback = null) => {
-      roomRef.get().then((documentSnapshot) => {
-        if (documentSnapshot && documentSnapshot.exists) {
+      getDoc(roomRef).then((documentSnapshot) => {
+        if (documentSnapshot && documentSnapshot.exists()) {
           const room = documentSnapshot.data();
           const estimate = room.estimates
             .filter((e) => e.name === name)
             .shift();
           if (estimate) {
-            roomRef
-              .update({
-                estimates: firebase.firestore.FieldValue.arrayRemove(estimate),
-              })
-              .then(callback);
+            updateDoc(roomRef, {
+              estimates: arrayRemove(estimate),
+            }).then(callback);
             return;
           }
         }
@@ -108,18 +118,18 @@ function createTableState() {
     subscribe,
     set,
     open: () => {
-      roomRef.get().then((documentSnapshot) => {
-        if (documentSnapshot && documentSnapshot.exists) {
+      getDoc(roomRef).then((documentSnapshot) => {
+        if (documentSnapshot && documentSnapshot.exists()) {
           const room = documentSnapshot.data();
           room.tableState = {
             closed: false,
           };
-          roomRef.set(room);
+          setDoc(roomRef, room);
         }
       });
     },
     close: () => {
-      roomRef.delete();
+      deleteDoc(roomRef);
     },
   };
 }
