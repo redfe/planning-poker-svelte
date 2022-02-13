@@ -118,15 +118,7 @@ function createTableState() {
     subscribe,
     set,
     open: () => {
-      getDoc(roomRef).then((documentSnapshot) => {
-        if (documentSnapshot && documentSnapshot.exists()) {
-          const room = documentSnapshot.data();
-          room.tableState = {
-            closed: false,
-          };
-          setDoc(roomRef, room);
-        }
-      });
+      updateDoc(roomRef, { 'tableState.closed': false });
     },
     close: () => {
       deleteDoc(roomRef);
