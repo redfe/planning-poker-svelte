@@ -106,7 +106,7 @@ function createEstimates() {
       });
     },
     clear: () => {
-      roomRef.delete();
+      deleteDoc(roomRef);
     },
   };
 }
