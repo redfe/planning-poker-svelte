@@ -51,31 +51,46 @@ function createEstimates() {
     set,
     append: (name, point) => {
       roomRef.get().then((documentSnapshot) => {
-        let _estimates = [];
-        let _tableState = { closed: true };
         if (documentSnapshot && documentSnapshot.exists) {
-          const room = documentSnapshot.data();
-          _estimates = [...room.estimates.filter((e) => e.name !== name)];
-          _tableState = room.tableState;
+          roomRef.update({
+            estimates: firebase.firestore.FieldValue.arrayUnion({
+              name: name,
+              point: point,
+              appendedAt: firebase.firestore.Timestamp.now(),
+            }),
+          });
+        } else {
+          let _estimates = [];
+          let _tableState = { closed: true };
+          _estimates.push({
+            name: name,
+            point: point,
+            appendedAt: firebase.firestore.Timestamp.now(),
+          });
+          roomRef.set({
+            estimates: _estimates,
+            tableState: _tableState,
+          });
         }
-        _estimates.push({
-          name: name,
-          point: point,
-          appendedAt: firebase.firestore.Timestamp.now(),
-        });
-        roomRef.set({
-          estimates: _estimates,
-          tableState: _tableState,
-        });
       });
     },
     remove: (name, callback = null) => {
       roomRef.get().then((documentSnapshot) => {
         if (documentSnapshot && documentSnapshot.exists) {
           const room = documentSnapshot.data();
-          room.estimates = room.estimates.filter((e) => e.name !== name);
-          roomRef.set(room).then(callback);
-        } else {
+          const estimate = room.estimates
+            .filter((e) => e.name === name)
+            .shift();
+          if (estimate) {
+            roomRef
+              .update({
+                estimates: firebase.firestore.FieldValue.arrayRemove(estimate),
+              })
+              .then(callback);
+            return;
+          }
+        }
+        if (callback) {
           callback();
         }
       });
