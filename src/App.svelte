@@ -37,7 +37,7 @@
         userName,
         selectedPoint === event.detail.point
           ? null
-          : () => setTimeout(appendCallback, 300)
+          : () => setTimeout(appendCallback, 450)
       );
     } else {
       appendCallback();
@@ -49,8 +49,7 @@
   <title>{name}</title>
   <link
     href="https://fonts.googleapis.com/css?family=M+PLUS+1p"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 </svelte:head>
 
 {#await setup}
@@ -64,6 +63,5 @@
     {isFixedUserName}
     {handleOpenButtonClick}
     {handleFixName}
-    {handleSelectCard}
-  />
+    {handleSelectCard} />
 {/await}
