@@ -1,12 +1,11 @@
-<script>
-  export let isCopied = false;
+<script lang="ts">
+  export let isCopied: boolean = false;
 </script>
 
 <button
   class={['copy-button', isCopied ? 'copied' : ''].join(' ')}
   on:click
-  disabled={isCopied ? true : false}>{isCopied ? 'COPIED' : 'COPY'}</button
->
+  disabled={isCopied ? true : false}>{isCopied ? 'COPIED' : 'COPY'}</button>
 
 <style>
   .copy-button {

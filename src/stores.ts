@@ -14,6 +14,7 @@ import {
   arrayUnion,
   Timestamp,
 } from 'firebase/firestore';
+import type {Estimate, TableState, Room} from './types';
 
 const firebaseConfig = {
   projectId: 'sample-project-294713',
@@ -26,10 +27,10 @@ const roomRef = doc(roomCollection, roomId);
 
 export const estimates = createEstimates();
 export const tableState = createTableState();
-export const setup = new Promise((resolve) => {
+export const setup = new Promise<void>((resolve) => {
   onSnapshot(roomRef, (documentSnapshot) => {
     if (documentSnapshot && documentSnapshot.exists()) {
-      const room = documentSnapshot.data();
+      const room: Room = documentSnapshot.data() as Room;
       const comparator = (a, b) => a.appendedAt.seconds - b.appendedAt.seconds;
       estimates.set(room.estimates.sort(comparator));
       tableState.set(room.tableState);
@@ -56,7 +57,7 @@ function getSetupedRoomId() {
 }
 
 function createEstimates() {
-  const { subscribe, set } = writable([]);
+  const { subscribe, set } = writable<Estimate[]>([]);
 
   return {
     subscribe,
@@ -72,8 +73,8 @@ function createEstimates() {
             }),
           });
         } else {
-          let _estimates = [];
-          let _tableState = { closed: true };
+          const _estimates: Estimate[] = [];
+          const _tableState: TableState = { closed: true };
           _estimates.push({
             name: name,
             point: point,
@@ -89,7 +90,7 @@ function createEstimates() {
     remove: (name, callback = null) => {
       getDoc(roomRef).then((documentSnapshot) => {
         if (documentSnapshot && documentSnapshot.exists()) {
-          const room = documentSnapshot.data();
+          const room = documentSnapshot.data() as Room;
           const estimate = room.estimates
             .filter((e) => e.name === name)
             .shift();
@@ -112,7 +113,7 @@ function createEstimates() {
 }
 
 function createTableState() {
-  const { subscribe, set } = writable({ closed: true });
+  const { subscribe, set } = writable<TableState>({ closed: true });
 
   return {
     subscribe,

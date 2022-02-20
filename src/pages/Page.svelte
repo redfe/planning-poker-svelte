@@ -1,13 +1,14 @@
-<script>
+<script lang="ts">
   import Table from '../ui_components/Table.svelte';
   import UserSelection from '../ui_components/UserSelection.svelte';
   import UnsplashCredit from '../ui_components/UnsplashCredit.svelte';
+  import type { Estimate } from '../types';
 
-  export let name;
-  export let isTableClosed = true;
-  export let estimates = [];
-  export let userName = '';
-  export let isFixedUserName = false;
+  export let name: string;
+  export let isTableClosed: boolean = true;
+  export let estimates: Estimate[] = [];
+  export let userName: string = '';
+  export let isFixedUserName: boolean = false;
   export let handleOpenButtonClick;
   export let handleFixName;
   export let handleSelectCard;

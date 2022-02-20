@@ -1,16 +1,17 @@
-<script>
+<script lang="ts">
   import { fly } from 'svelte/transition';
   import Card from './Card.svelte';
   import OpenButton from './OpenButton.svelte';
   import CopyButton from './CopyButton.svelte';
+  import type { Estimate } from '../types';
 
-  export let estimates = [];
-  export let isClosed = true;
+  export let estimates: Estimate[] = [];
+  export let isClosed: boolean = true;
   export let handleOpenButtonClick = () => {};
 
   estimates = estimates || [];
 
-  let isCopied = false;
+  let isCopied: boolean = false;
 
   function handleCopyButtonClick() {
     const text = createCopyText();
@@ -35,7 +36,8 @@
       estimates
         .sort((e1, e2) => (e1.name > e2.name ? 1 : -1))
         .reduce(
-          (acc, cur) => (acc ? acc + ' ' : '') + `${cur.name}(${cur.point})`,
+          (acc: string, cur) =>
+            (acc ? acc + ' ' : '') + `${cur.name}(${cur.point})`,
           null
         )
     );

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 </script>
 
 <button class={'ok-button'} on:click|preventDefault|stopPropagation>OK</button>

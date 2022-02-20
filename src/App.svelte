@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { setup, estimates, tableState } from './stores.js';
   import Page from './pages/Page.svelte';
-  export let name;
+  export let name: string;
 
   let userName = window.localStorage.name || '';
   let isFixedUserName = false;

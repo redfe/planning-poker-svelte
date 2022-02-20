@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
+  import type { Estimate } from '../types';
+
   import Card from './Card.svelte';
   import OkButton from './OkButton.svelte';
-  export let userName = '';
-  export let isFixedUserName = false;
-  export let estimates = [];
+  export let userName: string = '';
+  export let isFixedUserName: boolean = false;
+  export let estimates: Estimate[] = [];
   export let handleSelectCard;
   export let handleFixName;
 
@@ -14,7 +16,7 @@
     .map((e) => e.point)
     .pop();
 
-  const fibonacci = [
+  const fibonacci: string[] = [
     '0',
     '1',
     '2',
@@ -28,7 +30,7 @@
     '?',
     '∞',
   ];
-  const ten = [
+  const ten: string[] = [
     '0',
     '10',
     '20',
@@ -44,7 +46,7 @@
     '∞',
   ];
 
-  const pointsTemplates = [
+  const pointsTemplates: { id: string; points: string[] }[] = [
     { id: 'fibonacci', points: fibonacci },
     { id: 'ten', points: ten },
   ];
@@ -72,8 +74,7 @@
         selectable={true}
         size={'medium'}
         selected={selectedPoint === point}
-        on:selectCard={handleSelectCard}
-      />
+        on:selectCard={handleSelectCard} />
     {/each}
   {:else}
     <div class="user-name">
