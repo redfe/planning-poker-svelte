@@ -14,7 +14,7 @@ import {
   arrayUnion,
   Timestamp,
 } from 'firebase/firestore';
-import type {Estimate, TableState, Room} from './types';
+import type { Estimate, TableState, Room } from './types';
 
 const firebaseConfig = {
   projectId: 'sample-project-294713',
