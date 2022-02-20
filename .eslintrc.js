@@ -1,18 +1,19 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
+    es2021: true,
   },
-  extends: 'eslint:recommended',
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 11,
+    ecmaVersion: 12,
     sourceType: 'module',
   },
+  plugins: ['svelte3', '@typescript-eslint'],
   rules: {
     semi: ['error', 'always'],
     quotes: ['error', 'single'],
   },
-  plugins: ['svelte3'],
   overrides: [
     {
       files: ['*.svelte'],
