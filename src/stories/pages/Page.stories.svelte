@@ -13,8 +13,7 @@
     handleFixName: { action: 'handleFixName' },
     handleSelectCard: { action: 'handleSelectCard' },
     handleOkButtonClick: { action: 'handleOkButtonClick' },
-  }}
-/>
+  }} />
 
 <!-- More on component templates: https://storybook.js.org/docs/svelte/writing-stories/introduction#using-args -->
 <Template let:args>
@@ -23,8 +22,7 @@
     handleOpenButtonClick={args.handleOpenButtonClick}
     handleFixName={args.handleFixName}
     handleSelectCard={args.handleSelectCard}
-    handleOkButtonClick={args.handleOkButtonClick}
-  />
+    handleOkButtonClick={args.handleOkButtonClick} />
 </Template>
 
 <Story
@@ -32,8 +30,7 @@
   args={{
     name: 'Planning Poker',
     isTableClosed: true,
-  }}
-/>
+  }} />
 
 <Story
   name="User Name Inputed"
@@ -41,8 +38,7 @@
     name: 'Planning Poker',
     isTableClosed: true,
     userName: '山田',
-  }}
-/>
+  }} />
 
 <Story
   name="User Name Fixed"
@@ -51,8 +47,7 @@
     isTableClosed: true,
     userName: '山田',
     isFixedUserName: true,
-  }}
-/>
+  }} />
 
 <Story
   name="Point Selected"
@@ -62,8 +57,7 @@
     userName: '山田',
     isFixedUserName: true,
     estimates: [{ name: '山田', point: '55' }],
-  }}
-/>
+  }} />
 
 <Story
   name="Other Users Added"
@@ -77,8 +71,7 @@
       { name: '鈴木', point: '8' },
       { name: '田中', point: '13' },
     ],
-  }}
-/>
+  }} />
 
 <Story
   name="Opend"
@@ -92,8 +85,7 @@
       { name: '鈴木', point: '8' },
       { name: '田中', point: '13' },
     ],
-  }}
-/>
+  }} />
 
 <Story
   name="Returned"
@@ -103,5 +95,4 @@
     userName: '山田',
     isFixedUserName: true,
     estimates: [],
-  }}
-/>
+  }} />

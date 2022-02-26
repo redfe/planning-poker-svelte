@@ -15,8 +15,7 @@
     darkMode: {
       current: 'dark',
     },
-  }}
-/>
+  }} />
 
 <!-- More on component templates: https://storybook.js.org/docs/svelte/writing-stories/introduction#using-args -->
 <Template let:args class="template">
@@ -24,8 +23,7 @@
     <UserSelection
       {...args}
       handleSelectCard={args.onClick}
-      handleFixName={args.onClick}
-    />
+      handleFixName={args.onClick} />
   </div>
 </Template>
 
@@ -36,8 +34,7 @@
   args={{
     userName: '山田',
     isFixedUserName: false,
-  }}
-/>
+  }} />
 
 <Story
   name="CardSelected"
@@ -45,8 +42,7 @@
     userName: '山田',
     isFixedUserName: true,
     estimates: [{ name: '山田', point: '55' }],
-  }}
-/>
+  }} />
 
 <style>
   div {

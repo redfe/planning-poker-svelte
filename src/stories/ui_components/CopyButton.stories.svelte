@@ -10,8 +10,7 @@
   component={CopyButton}
   argTypes={{
     onClick: { action: 'onClick' },
-  }}
-/>
+  }} />
 
 <!-- More on component templates: https://storybook.js.org/docs/svelte/writing-stories/introduction#using-args -->
 <Template let:args>

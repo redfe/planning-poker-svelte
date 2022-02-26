@@ -15,8 +15,7 @@
       options: ['small', 'medium', 'large'],
     },
     onClick: { action: 'onClick' },
-  }}
-/>
+  }} />
 
 <!-- More on component templates: https://storybook.js.org/docs/svelte/writing-stories/introduction#using-args -->
 <Template let:args>
@@ -30,8 +29,7 @@
     selectable: true,
     selected: false,
     closed: false,
-  }}
-/>
+  }} />
 
 <Story
   name="SelectedOnUserSelection"
@@ -40,8 +38,7 @@
     selectable: true,
     selected: true,
     closed: false,
-  }}
-/>
+  }} />
 
 <Story
   name="ClosedOnTable"
@@ -51,8 +48,7 @@
     selected: false,
     closed: true,
     size: 'large',
-  }}
-/>
+  }} />
 
 <Story
   name="OpendOnTable"
@@ -62,5 +58,4 @@
     selected: false,
     closed: false,
     size: 'large',
-  }}
-/>
+  }} />

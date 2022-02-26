@@ -1,14 +1,14 @@
 import type { Timestamp } from 'firebase/firestore';
 
 export interface Estimate {
-    name: string,
-    point: string,
-    appendedAt: Timestamp,
+  name: string;
+  point: string;
+  appendedAt: Timestamp;
 }
 export interface TableState {
-    closed: boolean,
+  closed: boolean;
 }
 export interface Room {
-    estimates: Estimate[],
-    tableState: TableState,
+  estimates: Estimate[];
+  tableState: TableState;
 }
