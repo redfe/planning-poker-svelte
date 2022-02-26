@@ -9,7 +9,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['svelte3', '@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'svelte3'],
   rules: {
     semi: ['error', 'always'],
     quotes: ['error', 'single'],
@@ -20,4 +20,7 @@ module.exports = {
       processor: 'svelte3/svelte3',
     },
   ],
+  settings: {
+    'svelte3/typescript': () => require('typescript'),
+  },
 };

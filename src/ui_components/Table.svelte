@@ -6,12 +6,14 @@
   import type { Estimate } from '../types';
 
   export let estimates: Estimate[] = [];
-  export let isClosed: boolean = true;
-  export let handleOpenButtonClick = () => {};
+  export let isClosed = true;
+  export let handleOpenButtonClick = () => {
+    //noop
+  };
 
   estimates = estimates || [];
 
-  let isCopied: boolean = false;
+  let isCopied = false;
 
   function handleCopyButtonClick() {
     const text = createCopyText();

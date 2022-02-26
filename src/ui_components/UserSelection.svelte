@@ -3,8 +3,8 @@
 
   import Card from './Card.svelte';
   import OkButton from './OkButton.svelte';
-  export let userName: string = '';
-  export let isFixedUserName: boolean = false;
+  export let userName = '';
+  export let isFixedUserName = false;
   export let estimates: Estimate[] = [];
   export let handleSelectCard;
   export let handleFixName;

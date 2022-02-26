@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let isCopied: boolean = false;
+  export let isCopied = false;
 </script>
 
 <button

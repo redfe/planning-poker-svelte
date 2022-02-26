@@ -5,10 +5,10 @@
   import type { Estimate } from '../types';
 
   export let name: string;
-  export let isTableClosed: boolean = true;
+  export let isTableClosed = true;
   export let estimates: Estimate[] = [];
-  export let userName: string = '';
-  export let isFixedUserName: boolean = false;
+  export let userName = '';
+  export let isFixedUserName = false;
   export let handleOpenButtonClick;
   export let handleFixName;
   export let handleSelectCard;

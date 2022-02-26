@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let isClosed: boolean = true;
+  export let isClosed = true;
 </script>
 
 <button class={'open-button'} on:click>{isClosed ? 'OPEN' : 'RETURN'}</button>

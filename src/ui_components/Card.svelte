@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   export let point: string;
-  export let selectable: boolean = false;
-  export let selected: boolean = false;
-  export let closed: boolean = false;
+  export let selectable = false;
+  export let selected = false;
+  export let closed = false;
   export let size: 'small' | 'medium' | 'large' = 'medium';
   const dispatch = createEventDispatcher();
 
