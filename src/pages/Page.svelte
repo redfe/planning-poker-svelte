@@ -68,6 +68,7 @@
     background-color: rgba(0, 0, 0, 0.7);
     padding: 1.5rem 1.5rem;
     animation: 2s fadeIn forwards;
+    zoom: 0.8;
   }
   .container {
     position: relative;
@@ -94,7 +95,7 @@
 
   @media (max-width: 639px) {
     .container {
-      zoom: 0.9;
+      zoom: 0.7;
     }
   }
 </style>
