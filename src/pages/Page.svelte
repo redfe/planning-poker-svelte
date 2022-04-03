@@ -14,9 +14,20 @@
   export let handleSelectCard;
 
   estimates = estimates || [];
+
+  let height = null;
+  const changeHeight = () => {
+    height =
+      document.documentElement.offsetHeight <
+      document.documentElement.scrollHeight
+        ? 'auto'
+        : '100%';
+  };
 </script>
 
-<div class="container">
+<svelte:window on:resize={changeHeight} on:load={changeHeight} />
+
+<div class="container" style="height: {height}">
   <main>
     <h1>{name}</h1>
     <p>share the URL of this page with your team members.</p>
@@ -60,19 +71,20 @@
       background-color: rgba(0, 0, 0, 0);
     }
   }
+  .container {
+    position: relative;
+    zoom: 0.8;
+  }
+
   main {
-    border-radius: 1.5rem;
     text-align: center;
-    max-width: 45rem;
+    max-width: 46rem;
+    height: 100%;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.7);
     padding: 1.5rem 1.5rem;
     animation: 2s fadeIn forwards;
-    zoom: 0.8;
-  }
-  .container {
-    position: relative;
-    padding: 1.5rem 0;
+    box-sizing: border-box;
   }
 
   h1 {
@@ -88,14 +100,15 @@
 
   .devinfo {
     color: white;
+    margin-top: 2rem;
   }
   .devinfo a {
     color: white;
   }
 
   @media (max-width: 639px) {
-    .container {
-      zoom: 0.7;
+    :global(body) {
+      zoom: 0.9;
     }
   }
 </style>
