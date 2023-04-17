@@ -10,15 +10,6 @@
     "editor.insertSpaces": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "eslint.probe": [
-    "javascript",
-    "html",
-    "markdown",
-    "svelte",
-    "typescript"
-  ],
-  "eslint.validate": [
-    "typescript",
-    "svelte",
-  ]
+  "eslint.probe": ["javascript", "html", "markdown", "svelte", "typescript"],
+  "eslint.validate": ["typescript", "svelte"]
 }

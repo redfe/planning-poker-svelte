@@ -31,7 +31,7 @@ export const setup = new Promise<void>((resolve) => {
   onSnapshot(roomRef, (documentSnapshot) => {
     if (documentSnapshot && documentSnapshot.exists()) {
       const room: Room = documentSnapshot.data() as Room;
-      const comparator = (a, b) => a.appendedAt.seconds - b.appendedAt.seconds;
+      const comparator = (a:Estimate, b:Estimate) => a.appendedAt.seconds - b.appendedAt.seconds;
       estimates.set(room.estimates.sort(comparator));
       tableState.set(room.tableState);
     } else {
@@ -62,7 +62,7 @@ function createEstimates() {
   return {
     subscribe,
     set,
-    append: (name, point) => {
+    append: (name:string, point:string) => {
       getDoc(roomRef).then((documentSnapshot) => {
         if (documentSnapshot && documentSnapshot.exists()) {
           updateDoc(roomRef, {
@@ -87,7 +87,7 @@ function createEstimates() {
         }
       });
     },
-    remove: (name, callback = null) => {
+    remove: (name: string, callback:()=>any) => {
       getDoc(roomRef).then((documentSnapshot) => {
         if (documentSnapshot && documentSnapshot.exists()) {
           const room = documentSnapshot.data() as Room;
