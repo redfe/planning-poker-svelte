@@ -27,7 +27,7 @@ let roomRef: DocumentReference<DocumentData>;
 export const estimates = createEstimates();
 export const tableState = createTableState();
 export const setup = (roomId: string) =>
-	new Promise<void>(async (resolve) => {
+	new Promise<void>((resolve) => {
 		const roomCollection = collection(db, 'rooms');
 		roomRef = doc(roomCollection, roomId);
 		onSnapshot(roomRef, (documentSnapshot) => {
