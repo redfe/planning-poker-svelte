@@ -2,6 +2,7 @@
 	import Table from '$lib/components/Table.svelte';
 	import UserSelection from '$lib/components/UserSelection.svelte';
 	import UnsplashCredit from '$lib/components/UnsplashCredit.svelte';
+	import { PUBLIC_BASE_URL } from '$env/static/public';
 	import type { Estimate } from '../types';
 
 	export let name: string;
@@ -37,7 +38,9 @@
 				href="https://github.com/redfe/planning-poker-svelte"
 				target="_blank"
 				rel="noopener noreferrer">Source code</a
-			>,<a href="./storybook-static/" target="_blank" rel="noopener noreferrer">Storybook</a>.
+			>,<a href={`${PUBLIC_BASE_URL}/storybook-static/`} target="_blank" rel="noopener noreferrer"
+				>Storybook</a
+			>.
 		</div>
 	</main>
 	<UnsplashCredit />
