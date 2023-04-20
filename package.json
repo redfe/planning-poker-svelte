@@ -13,7 +13,7 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build && mv storybook-static ./docs/storybook-static"
+		"build-storybook": "storybook build && mv storybook-static ./build/storybook-static"
 	},
 	"dependencies": {
 		"firebase": "^9.6.6",
