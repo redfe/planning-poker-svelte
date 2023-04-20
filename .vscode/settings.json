@@ -19,6 +19,7 @@
   ],
   "eslint.validate": [
     "typescript",
-    "svelte",
-  ]
+    "svelte"
+  ],
+  "liveServer.settings.root": "./docs"
 }
