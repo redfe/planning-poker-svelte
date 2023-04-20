@@ -1,2 +1,0 @@
-import{O as t}from"./OkButton-95da6a4b.js";import"./index-b82910e3.js";const m={component:t,tags:["autodocs"],args:{},argTypes:{}},r={};var a,e,o;r.parameters={...r.parameters,docs:{...(a=r.parameters)==null?void 0:a.docs,source:{originalSource:"{}",...(o=(e=r.parameters)==null?void 0:e.docs)==null?void 0:o.source}}};const p=["Default"];export{r as Default,p as __namedExportsOrder,m as default};
-//# sourceMappingURL=OkButton.stories-c8a8d9c0.js.map
