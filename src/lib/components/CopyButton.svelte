@@ -22,7 +22,6 @@
 	.copy-button.copied {
 		color: rgb(161, 18, 18);
 		box-shadow: none;
-		font-size: 0.2rem;
 		font-weight: bold;
 		cursor: auto;
 		transform: translateY(2px);
