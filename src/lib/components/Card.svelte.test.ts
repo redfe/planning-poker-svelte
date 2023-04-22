@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import Card from './Card.svelte';
@@ -6,9 +6,8 @@ import Card from './Card.svelte';
 const doSelectCard = async (point: string, selectable: boolean) => {
 	// Arrange
 	let selectedPoint = null;
-	const selectCardMock = vi.fn((event) => (selectedPoint = event.detail.point));
 	const { container, component } = render(Card, { point: point, selectable: selectable });
-	component.$on('selectCard', selectCardMock);
+	component.$on('selectCard', (event) => (selectedPoint = event.detail.point));
 	const card = container.querySelector('.card') as Element;
 
 	// Act
@@ -19,7 +18,6 @@ const doSelectCard = async (point: string, selectable: boolean) => {
 
 describe('Card.svelte', () => {
 	afterEach(() => {
-		vi.restoreAllMocks();
 		cleanup();
 	});
 
