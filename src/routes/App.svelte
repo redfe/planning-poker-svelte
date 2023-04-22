@@ -37,11 +37,7 @@
 		if (selectedPoint) {
 			estimates.remove(
 				userName,
-				selectedPoint === event.detail.point
-					? () => {
-							/* noop */
-					  }
-					: () => setTimeout(appendCallback, 450)
+				selectedPoint === event.detail.point ? () => null : () => setTimeout(appendCallback, 450)
 			);
 		} else {
 			appendCallback();
