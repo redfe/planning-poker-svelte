@@ -4,6 +4,7 @@
 	import UnsplashCredit from '$lib/components/UnsplashCredit.svelte';
 	import { PUBLIC_BASE_URL } from '$env/static/public';
 	import type { Estimate } from '../types';
+	import { onMount } from 'svelte';
 
 	export let name: string;
 	export let isTableClosed = true;
@@ -17,17 +18,21 @@
 	estimates = estimates || [];
 
 	let height = '';
-	const changeHeight = (_arg: any) => {
+	const changeHeight = () => {
 		height =
 			document.documentElement.offsetHeight < document.documentElement.scrollHeight
 				? 'auto'
 				: '100%';
 	};
+
+	onMount(() => {
+		changeHeight();
+	});
 </script>
 
 <svelte:window on:resize={changeHeight} />
 
-<div class="container" style="height: {height}" use:changeHeight>
+<div class="container" style="height: {height}">
 	<main>
 		<h1>{name}</h1>
 		<p>share the URL of this page with your team members.</p>

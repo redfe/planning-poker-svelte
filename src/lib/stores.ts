@@ -76,7 +76,7 @@ function createEstimates() {
 				}
 			});
 		},
-		remove: (name: string, callback: () => any) => {
+		remove: (name: string, callback: () => void) => {
 			getDoc(roomRef).then((documentSnapshot) => {
 				if (documentSnapshot && documentSnapshot.exists()) {
 					const room = documentSnapshot.data() as Room;
