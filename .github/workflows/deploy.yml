@@ -27,6 +27,8 @@ jobs:
         run: npm install
 
       - name: test
+        env:
+          PUBLIC_BASE_URL: '/planning-poker-svelte'
         run: npm run test:unit -- --run && npm run test
 
       - name: build
