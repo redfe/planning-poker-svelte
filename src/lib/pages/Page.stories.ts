@@ -61,3 +61,10 @@ export const Opened: Story = {
 		isTableClosed: false
 	}
 };
+
+export const Returned: Story = {
+	args: {
+		...UserNameFixed.args,
+		isTableClosed: true
+	}
+};
