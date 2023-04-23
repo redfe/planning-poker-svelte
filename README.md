@@ -1,3 +1,5 @@
+[![Deploy to GitHub Pages](https://github.com/redfe/planning-poker-svelte/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/redfe/planning-poker-svelte/actions/workflows/deploy.yml)
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
