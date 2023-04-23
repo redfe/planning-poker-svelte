@@ -31,8 +31,10 @@ const meta = {
 		}
 	},
 	argTypes: {},
-	decorators: [() => UserSelectionDecorator]
+	decorators: [() => UserSelectionDecorator as UserSelectionDecorator__SvelteComponent_]
 } satisfies Meta<UserSelection>;
+
+class UserSelectionDecorator__SvelteComponent_ {}
 
 export default meta;
 type Story = StoryObj<typeof meta>;
