@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
       - name: test
         env:
           PUBLIC_BASE_URL: '/planning-poker-svelte'
