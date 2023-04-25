@@ -1,3 +1,4 @@
+import { fireEvent, within } from '@storybook/testing-library';
 import type { Meta, StoryObj } from '@storybook/svelte';
 
 import UserSelection from './UserSelection.svelte';
@@ -39,11 +40,18 @@ class UserSelectionDecorator__SvelteComponent_ {}
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const NoName: Story = {};
+export const NameInput: Story = {
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await fireEvent.input(canvas.getByPlaceholderText('your name'), { target: { value: '山田' } });
+		await fireEvent.click(canvas.getByText('OK'));
+	}
+};
 
-export const NameInputed: Story = {
+export const OkClicked: Story = {
 	args: {
-		userName: '山田'
+		userName: '山田',
+		isFixedUserName: true
 	}
 };
 
@@ -68,5 +76,10 @@ export const CardSelected: Story = {
 				appendedAt: Timestamp.now()
 			}
 		]
+	},
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await fireEvent.change(canvas.getByDisplayValue('fibonacci'), { target: { value: 'ten' } });
+		await fireEvent.change(canvas.getByDisplayValue('ten'), { target: { value: 'fibonacci' } });
 	}
 };
