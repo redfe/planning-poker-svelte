@@ -1,6 +1,3 @@
 {
-	"recommendations": [
-		"svelte.svelte-vscode",
-		"amodio.tsl-problem-matcher"
-	]
+	"recommendations": ["svelte.svelte-vscode", "amodio.tsl-problem-matcher"]
 }
